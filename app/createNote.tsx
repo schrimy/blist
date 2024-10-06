@@ -1,18 +1,30 @@
 import React, { useRef } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button, TextInput, View, Text } from 'react-native';
-import { noteData } from '../data/notesData';
 import { setData } from '../data/storage';
 
-const CreateNote = (): React.JSX.Element => {
+function CreateNote(): React.JSX.Element {
     const [date, setDate] = React.useState(new Date());
     const [showPicker, setShowPicker] = React.useState(false);
-    const title = useRef('');
-    const content = useRef('');
+    const title = useRef<TextInput>(null);
+    const content = useRef<TextInput>(null);
+
+    const storeNote = (): void => {
+        const note = {
+            title: title.current ? title.current.value : '',
+            type: 'note',
+            dateStart: date,
+            content: content.current ? content.current.value : '',
+            list: false,
+            colour: '',
+        };
+
+        setData([note]);
+    }
 
     return (
         <View>
-            <TextInput ref={"title"} placeholder="Title" />
+            <TextInput ref={title} placeholder="Title" />
             <Text>{`Start date: ` + date.toLocaleDateString()}</Text>
             <Button title="Pick a date" onPress={() => setShowPicker(true)} />
             {showPicker
@@ -25,21 +37,10 @@ const CreateNote = (): React.JSX.Element => {
                         setShowPicker(false);
                     }}
                 />}
-            <TextInput ref={"content"} placeholder="Content" multiline={true} />
-            <Button title="Save" onPress={() => storeNote({
-                title: title.current.valueOf(),
-                type: 'note',
-                dateStart: date,
-                content: content.current.valueOf(),
-                list: false,
-                colour: '',
-            })}/>
+            <TextInput ref={content} placeholder="Content" multiline={true} />
+            <Button title="Save" onPress={() => storeNote()}/>
         </View>
     )
 };
-
-const storeNote = (note: noteData): void => {
-    setData([note]);
-}
 
 export default CreateNote;

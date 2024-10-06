@@ -13,10 +13,15 @@ export const unstable_settings = {
 export default function Index() {
   const [notes, setNotes] = React.useState<noteData[]>([]);
 
+  const retreiveNotes = async (): Promise<void> => {
+    const data = await getData();
+
+    setNotes(data);
+  }
+
   // TODO: hook up with the actual storage so it updates it when added to in create note
   useEffect(() => {
-    const data = getData();
-    setNotes(data);
+    retreiveNotes();
   }, []);
 
   return (

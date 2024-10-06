@@ -1,10 +1,9 @@
-import { MMKV } from 'react-native-mmkv';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { noteData } from './notesData';
 
-const storage = new MMKV();
 
-const getData = (): noteData[] => {
-    const data = storage.getString('notes');
+const getData = async(): Promise<noteData[]> => {
+    const data = await AsyncStorage.getItem('notes');
 
     if (data) {
         return JSON.parse(data);
@@ -13,14 +12,17 @@ const getData = (): noteData[] => {
     }
 }
 
-const setData = (notes: noteData[]): void => {
-    const data = JSON.stringify(notes);
-
-    storage.set('notes', data);
+const setData = async (notes: noteData[]) => {
+    try {
+        const data = JSON.stringify(notes);
+        await AsyncStorage.setItem('notes', data);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const clearData = (): void => {
-    storage.clearAll();
+    AsyncStorage.clear();
 }
 
 export { getData, setData, clearData };
