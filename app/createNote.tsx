@@ -2,29 +2,34 @@ import React, { useRef } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button, TextInput, View, Text } from 'react-native';
 import { setData } from '../data/storage';
+import { noteData } from "../data/notesData";
 
 function CreateNote(): React.JSX.Element {
     const [date, setDate] = React.useState(new Date());
     const [showPicker, setShowPicker] = React.useState(false);
-    const title = useRef<TextInput>(null);
-    const content = useRef<TextInput>(null);
+    const [title, setTitle] = React.useState('');
+    const [content, setContent] = React.useState('');
+    // const title = useRef<TextInput>(null);
+    // const content = useRef<TextInput>(null);
 
     const storeNote = (): void => {
-        const note = {
-            title: title.current ? title.current.value : '',
+        const note: noteData = {
+            title: title,
             type: 'note',
             dateStart: date,
-            content: content.current ? content.current.value : '',
+            content: content,
             list: false,
             colour: '',
         };
+
+        console.log('store note:', note);
 
         setData([note]);
     }
 
     return (
         <View>
-            <TextInput ref={title} placeholder="Title" />
+            <TextInput placeholder="Title" onChangeText={(text) => setTitle(text)} />
             <Text>{`Start date: ` + date.toLocaleDateString()}</Text>
             <Button title="Pick a date" onPress={() => setShowPicker(true)} />
             {showPicker
@@ -37,8 +42,8 @@ function CreateNote(): React.JSX.Element {
                         setShowPicker(false);
                     }}
                 />}
-            <TextInput ref={content} placeholder="Content" multiline={true} />
-            <Button title="Save" onPress={() => storeNote()}/>
+            <TextInput placeholder="Content" onChangeText={(text) => setContent(text)} multiline={true} />
+            <Button title="Save" onPress={storeNote}/>
         </View>
     )
 };

@@ -4,7 +4,6 @@ import { Text, Pressable } from "react-native";
 import { styles } from "../styles/main";
 import { useRouter } from 'expo-router';
 
-
 export function AddButton(): React.JSX.Element {
     const router = useRouter();
 

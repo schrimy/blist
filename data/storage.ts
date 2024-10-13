@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { noteData } from './notesData';
 
-
 const getData = async(): Promise<noteData[]> => {
     const data = await AsyncStorage.getItem('notes');
 
