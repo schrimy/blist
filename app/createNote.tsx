@@ -1,16 +1,19 @@
-import React, { useRef } from 'react';
+import React, { useContext } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button, TextInput, View, Text } from 'react-native';
 import { setData } from '../data/storage';
 import { noteData } from "../data/notesData";
+import { StateContext } from './_layout';
+import { useRouter } from 'expo-router';
 
 function CreateNote(): React.JSX.Element {
     const [date, setDate] = React.useState(new Date());
     const [showPicker, setShowPicker] = React.useState(false);
     const [title, setTitle] = React.useState('');
     const [content, setContent] = React.useState('');
-    // const title = useRef<TextInput>(null);
-    // const content = useRef<TextInput>(null);
+    const router = useRouter();
+
+    const [notes, SetNoteState] = useContext(StateContext);
 
     const storeNote = (): void => {
         const note: noteData = {
@@ -25,6 +28,9 @@ function CreateNote(): React.JSX.Element {
         console.log('store note:', note);
 
         setData([note]);
+        SetNoteState([note]);
+
+        router.replace('/');
     }
 
     return (
