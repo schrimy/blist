@@ -1,5 +1,6 @@
 export interface noteData {
     title?: String,
+	id:number,
 	type: String,
 	dateStart: Date,
 	dateEnd?: Date,

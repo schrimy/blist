@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button, TextInput, View, Text } from 'react-native';
-import { setData } from '../data/storage';
+import { addData } from '../data/storage';
 import { noteData } from "../data/notesData";
-import { StateContext } from './_layout';
+import { StateContext } from '../components/data/StateProvider';
 import { useRouter } from 'expo-router';
 
 function CreateNote(): React.JSX.Element {
@@ -18,6 +18,7 @@ function CreateNote(): React.JSX.Element {
     const storeNote = (): void => {
         const note: noteData = {
             title: title,
+            id: Math.floor(Math.random() * 1000000),
             type: 'note',
             dateStart: date,
             content: content,
@@ -27,8 +28,8 @@ function CreateNote(): React.JSX.Element {
 
         console.log('store note:', note);
 
-        setData([note]);
-        SetNoteState([note]);
+        const newNotes = addData(notes ,note);
+        SetNoteState(newNotes);
 
         router.replace('/');
     }

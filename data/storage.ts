@@ -11,6 +11,14 @@ const getData = async(): Promise<noteData[]> => {
     }
 }
 
+const addData = (noteState: noteData[], newNote: noteData): noteData[] => {
+    const newNotes = [...noteState, newNote];
+
+    setData(newNotes);
+
+    return newNotes;
+}
+
 const setData = async (notes: noteData[]) => {
     try {
         const data = JSON.stringify(notes);
@@ -24,4 +32,4 @@ const clearData = (): void => {
     AsyncStorage.clear();
 }
 
-export { getData, setData, clearData };
+export { getData, addData, clearData };
