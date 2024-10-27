@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { AddButton } from '../components/AddButton';
 import { Stack } from "expo-router/stack";
 import { titles } from "../constants/Strings";
 import { StateContext } from "../components/data/StateProvider";
+import Note from "../components/ui/Note";
 
 export default function Index() {
   const [notes, setNotes] = useContext(StateContext);
@@ -13,7 +14,7 @@ export default function Index() {
       <Stack.Screen options={{ title: titles.app, headerTitleAlign: 'center' }} />
       {notes.length > 0 && notes.map((note, index) => {
         return (
-          <Text key={index}>{note.title}</Text>
+          <Note key={index} noteData={note} />
         );
       })}
       <AddButton />
