@@ -1,6 +1,6 @@
-import React, { createContext, useEffect, useState } from "react";
-import { noteData } from "../../data/notesData";
-import { getData } from "../../data/storage";
+import React, { createContext, useEffect, useState } from 'react';
+import { noteData } from '../../data/notesData';
+import { getData, clearData } from '../../data/storage';
 
 export const StateContext = createContext<[noteData[], (notes: noteData[]) => void]>([[], () => {}]);
 

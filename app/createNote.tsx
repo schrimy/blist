@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button, TextInput, View, Text } from 'react-native';
 import { addData } from '../data/storage';
-import { noteData } from "../data/notesData";
+import { noteData } from '../data/notesData';
 import { StateContext } from '../components/data/StateProvider';
 import { useRouter } from 'expo-router';
 
@@ -36,9 +36,9 @@ function CreateNote(): React.JSX.Element {
 
     return (
         <View>
-            <TextInput placeholder="Title" onChangeText={(text) => setTitle(text)} />
+            <TextInput placeholder='Title' onChangeText={(text) => setTitle(text)} />
             <Text>{`Start date: ` + date.toLocaleDateString()}</Text>
-            <Button title="Pick a date" onPress={() => setShowPicker(true)} />
+            <Button title='Pick a date' onPress={() => setShowPicker(true)} />
             {showPicker
                 && <DateTimePicker
                     value={date}
@@ -49,8 +49,8 @@ function CreateNote(): React.JSX.Element {
                         setShowPicker(false);
                     }}
                 />}
-            <TextInput placeholder="Content" onChangeText={(text) => setContent(text)} multiline={true} />
-            <Button title="Save" onPress={storeNote}/>
+            <TextInput placeholder='Content' onChangeText={(text) => setContent(text)} multiline={true} />
+            <Button title='Save' onPress={storeNote}/>
         </View>
     )
 };
