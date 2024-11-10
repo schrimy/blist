@@ -19,6 +19,10 @@ const addData = (noteState: noteData[], newNote: noteData): noteData[] => {
     return newNotes;
 }
 
+// const updateData = (): noteData[] => {
+
+// }
+
 const setData = async (notes: noteData[]) => {
     try {
         const data = JSON.stringify(notes);

@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button, TextInput, View, Text } from 'react-native';
 import { addData } from '../data/storage';
 import { noteData } from '../data/notesData';
 import { StateContext } from '../components/data/StateProvider';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 
 function CreateNote(): React.JSX.Element {
     const [date, setDate] = React.useState(new Date());
@@ -14,11 +14,12 @@ function CreateNote(): React.JSX.Element {
     const router = useRouter();
 
     const [notes, SetNoteState] = useContext(StateContext);
+    const { id } = useLocalSearchParams();
 
-    const storeNote = (): void => {
+    const storeOrUpdateNote = (): void => {
         const note: noteData = {
             title: title,
-            id: Math.floor(Math.random() * 1000000),
+            id: parseInt(String(id)) ?? Math.floor(Math.random() * 1000000),
             type: 'note',
             dateStart: date,
             content: content,
@@ -28,16 +29,31 @@ function CreateNote(): React.JSX.Element {
 
         console.log('store note:', note);
 
-        const newNotes = addData(notes ,note);
+        const newNotes = /*id 
+            ? updateData(notes, note)
+            : */ addData(notes ,note);
+
         SetNoteState(newNotes);
 
         router.replace('/');
     }
 
+    useEffect(() => {
+        if (id && typeof id === 'string') {
+            const note = notes.find((note) => note.id === parseInt(id));
+
+            if (note) {
+                setTitle(note.title);
+                setDate(note.dateStart);
+                setContent(note.content);
+            }
+        }
+    }, [id]);
+
     return (
         <View>
-            <TextInput placeholder='Title' onChangeText={(text) => setTitle(text)} />
-            <Text>{`Start date: ` + date.toLocaleDateString()}</Text>
+            <TextInput placeholder='Title' value={title} onChangeText={(text) => setTitle(text)} />
+            <Text>{`Start date: ${date.toLocaleDateString()}`}</Text>
             <Button title='Pick a date' onPress={() => setShowPicker(true)} />
             {showPicker
                 && <DateTimePicker
@@ -49,8 +65,9 @@ function CreateNote(): React.JSX.Element {
                         setShowPicker(false);
                     }}
                 />}
-            <TextInput placeholder='Content' onChangeText={(text) => setContent(text)} multiline={true} />
-            <Button title='Save' onPress={storeNote}/>
+            <TextInput placeholder='Content' value={content} onChangeText={(text) => setContent(text)} multiline={true} />
+            <Button title='Save' onPress={storeOrUpdateNote}/>
+            <Button title='Cancel' onPress={() => router.replace('/')} />
         </View>
     )
 };

@@ -1,11 +1,11 @@
 export interface noteData {
-    title?: String,
-	id:number,
-	type: String,
+    title: string,
+	id: number,
+	type: string,
 	dateStart: Date,
 	dateEnd?: Date,
 	alarm?: Date,
-	content: String,
+	content: string,
 	list?: Boolean,
-	colour: String,
+	colour: string,
 }

@@ -1,5 +1,6 @@
 import { noteData } from '../../data/notesData';
 import React, { useContext } from 'react';
+import { useRouter } from 'expo-router';
 import { deleteItem } from '../../data/storage';
 import { StateContext } from '../data/StateProvider';
 import { Text, StyleSheet, View, Pressable } from 'react-native';
@@ -35,10 +36,16 @@ const styles = StyleSheet.create({
 export default function Note(props: { noteData: noteData }): React.JSX.Element {
     const { title, content, id } = props.noteData;
     const [notes, setNotes] = useContext(StateContext);
+    const router = useRouter();
 
     return (
         <View style={styles.container}>
             <View style={styles.btnContainer}>
+                <Pressable style={styles.deleteBtn} onPress={(): void => router.push({ pathname: '/createNote', params: { id: id } })}>
+                    <Text>
+                        edit
+                    </Text>
+                </Pressable>
                 <Pressable style={styles.deleteBtn} onPress={(): void => setNotes(deleteItem(notes, id))}>
                     <Text>
                         x
