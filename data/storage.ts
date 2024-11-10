@@ -28,8 +28,16 @@ const setData = async (notes: noteData[]) => {
     }
 }
 
+const deleteItem = (noteState: noteData[], id: number): noteData[] => {
+    const newNotes = noteState.filter((note) => note.id !== id);
+
+    setData(newNotes);
+
+    return newNotes;
+}
+
 const clearData = (): void => {
     AsyncStorage.clear();
 }
 
-export { getData, addData, clearData };
+export { getData, addData, clearData, deleteItem };

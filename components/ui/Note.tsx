@@ -1,5 +1,7 @@
-import { noteData } from '@/data/notesData';
-import React from 'react';
+import { noteData } from '../../data/notesData';
+import React, { useContext } from 'react';
+import { deleteItem } from '../../data/storage';
+import { StateContext } from '../data/StateProvider';
 import { Text, StyleSheet, View, Pressable } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -10,7 +12,6 @@ const styles = StyleSheet.create({
         width: '50%',
         marginTop: 10,
         marginBottom: 10,
-        // paddingTop: 10,
         paddingBottom: 10,
         flexDirection: 'column',
         alignItems: 'center',
@@ -33,11 +34,12 @@ const styles = StyleSheet.create({
 
 export default function Note(props: { noteData: noteData }): React.JSX.Element {
     const { title, content, id } = props.noteData;
+    const [notes, setNotes] = useContext(StateContext);
 
     return (
         <View style={styles.container}>
             <View style={styles.btnContainer}>
-                <Pressable style={styles.deleteBtn} onPress={(): void => console.log('delete:', id)}>
+                <Pressable style={styles.deleteBtn} onPress={(): void => setNotes(deleteItem(notes, id))}>
                     <Text>
                         x
                     </Text>
