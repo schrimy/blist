@@ -1,9 +1,9 @@
 import { noteData } from '../../data/notesData';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useRouter } from 'expo-router';
 import { deleteItem } from '../../data/storage';
 import { StateContext } from '../data/StateProvider';
-import { Text, StyleSheet, View, Pressable } from 'react-native';
+import { Text, StyleSheet, View, Pressable, Modal } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -38,15 +38,46 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
     const [notes, setNotes] = useContext(StateContext);
     const router = useRouter();
 
+    const [showModal, setShowModal] = useState(false);
+
+    const DeleteModal = (): React.JSX.Element => {
+        // TODO: get data to delete certain note clicked on set id to a state object and use with deleItem call
+        return (
+            <>
+                <Modal
+                    animationType='slide'
+                    transparent={true}
+                    visible={showModal}
+                    onRequestClose={() => setShowModal(false)}
+                >
+                    <Text>
+                        Are you sure you want to delete this note?
+                    </Text>
+                    <Pressable onPress={(): void => console.log('delete note')}>
+                        <Text>
+                            Yes
+                        </Text>
+                    </Pressable>
+                    <Pressable onPress={() => router.replace('/')}>
+                        <Text>
+                            No
+                        </Text>
+                    </Pressable>
+                </Modal>
+            </>
+        );
+    }
+
     return (
         <View style={styles.container}>
+            <DeleteModal />
             <View style={styles.btnContainer}>
                 <Pressable style={styles.deleteBtn} onPress={(): void => router.push({ pathname: '/createNote', params: { id: id } })}>
                     <Text>
                         edit
                     </Text>
                 </Pressable>
-                <Pressable style={styles.deleteBtn} onPress={(): void => setNotes(deleteItem(notes, id))}>
+                <Pressable style={styles.deleteBtn} onPress={() => setShowModal(true)}>
                     <Text>
                         x
                     </Text>

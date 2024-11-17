@@ -19,9 +19,19 @@ const addData = (noteState: noteData[], newNote: noteData): noteData[] => {
     return newNotes;
 }
 
-// const updateData = (): noteData[] => {
+const updateData = (noteState: noteData[], newNote: noteData): noteData[] => {
+    const newNotes = noteState.map((note) => {
+        if (note.id === newNote.id) {
+            return newNote;
+        } else {
+            return note;
+        }
+    });
 
-// }
+    setData(newNotes);
+
+    return newNotes
+}
 
 const setData = async (notes: noteData[]) => {
     try {
@@ -44,4 +54,4 @@ const clearData = (): void => {
     AsyncStorage.clear();
 }
 
-export { getData, addData, clearData, deleteItem };
+export { getData, addData, clearData, deleteItem, updateData };

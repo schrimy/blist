@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button, TextInput, View, Text } from 'react-native';
-import { addData } from '../data/storage';
+import { addData, updateData } from '../data/storage';
 import { noteData } from '../data/notesData';
 import { StateContext } from '../components/data/StateProvider';
 import { useRouter, useLocalSearchParams } from 'expo-router';
@@ -16,6 +16,9 @@ function CreateNote(): React.JSX.Element {
     const [notes, SetNoteState] = useContext(StateContext);
     const { id } = useLocalSearchParams();
 
+    // TODO: check to make sure the random id doens't already exist in the notes
+    // TODO: set up creating list wit radio btn to choose between note and list
+
     const storeOrUpdateNote = (): void => {
         const note: noteData = {
             title: title,
@@ -27,11 +30,9 @@ function CreateNote(): React.JSX.Element {
             colour: '',
         };
 
-        console.log('store note:', note);
-
-        const newNotes = /*id 
+        const newNotes = id 
             ? updateData(notes, note)
-            : */ addData(notes ,note);
+            : addData(notes ,note);
 
         SetNoteState(newNotes);
 
@@ -53,7 +54,7 @@ function CreateNote(): React.JSX.Element {
     return (
         <View>
             <TextInput placeholder='Title' value={title} onChangeText={(text) => setTitle(text)} />
-            <Text>{`Start date: ${date.toLocaleDateString()}`}</Text>
+            <Text>{`Start date: ${new Date(date).toLocaleDateString()}`}</Text>
             <Button title='Pick a date' onPress={() => setShowPicker(true)} />
             {showPicker
                 && <DateTimePicker
