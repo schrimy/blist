@@ -3,26 +3,40 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button, TextInput, View, Text } from 'react-native';
 import { addData, updateData } from '../data/storage';
 import { noteData } from '../data/notesData';
+import RadioGroup from 'react-native-radio-buttons-group';
 import { StateContext } from '../components/data/StateProvider';
 import { useRouter, useLocalSearchParams } from 'expo-router';
+
+const radioData = [
+    {
+        id: '1',
+        label: 'Note',
+    },
+    {
+        id: '2',
+        label: 'List',
+    },
+];
 
 function CreateNote(): React.JSX.Element {
     const [date, setDate] = React.useState(new Date());
     const [showPicker, setShowPicker] = React.useState(false);
     const [title, setTitle] = React.useState('');
     const [content, setContent] = React.useState('');
+    const [selectedNoteStyle, setSelectedNoteStyle] = React.useState('1');
+
     const router = useRouter();
 
     const [notes, SetNoteState] = useContext(StateContext);
+    
     const { id } = useLocalSearchParams();
 
     // TODO: check to make sure the random id doens't already exist in the notes
-    // TODO: set up creating list wit radio btn to choose between note and list
-
+    // TODO: incorporate radio btn choice to save and start list obj implementation
     const storeOrUpdateNote = (): void => {
         const note: noteData = {
             title: title,
-            id: parseInt(String(id)) ?? Math.floor(Math.random() * 1000000),
+            id: id ? parseInt(String(id)) : Math.floor(Math.random() * 1000000),
             type: 'note',
             dateStart: date,
             content: content,
@@ -66,6 +80,12 @@ function CreateNote(): React.JSX.Element {
                         setShowPicker(false);
                     }}
                 />}
+            <RadioGroup 
+                layout='row'
+                radioButtons={radioData}
+                onPress={setSelectedNoteStyle}
+                selectedId={selectedNoteStyle}
+            />
             <TextInput placeholder='Content' value={content} onChangeText={(text) => setContent(text)} multiline={true} />
             <Button title='Save' onPress={storeOrUpdateNote}/>
             <Button title='Cancel' onPress={() => router.replace('/')} />

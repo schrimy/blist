@@ -5,34 +5,6 @@ import { deleteItem } from '../../data/storage';
 import { StateContext } from '../data/StateProvider';
 import { Text, StyleSheet, View, Pressable, Modal } from 'react-native';
 
-const styles = StyleSheet.create({
-    container: {
-        borderColor: '#000',
-        borderWidth: 1,
-        borderRadius: 5,
-        width: '50%',
-        marginTop: 10,
-        marginBottom: 10,
-        paddingBottom: 10,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-    },
-    deleteBtn: {
-        borderWidth: 1,
-        borderRadius: 3,
-        borderColor: '#000',
-        marginTop: 5,
-        marginRight: 5,
-        padding: 1,
-    },
-    btnContainer: {
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'flex-end'
-    }
-});
-
 export default function Note(props: { noteData: noteData }): React.JSX.Element {
     const { title, content, id } = props.noteData;
     const [notes, setNotes] = useContext(StateContext);
@@ -40,25 +12,37 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
 
     const [showModal, setShowModal] = useState(false);
 
+    const deleteNote = (currentNotes: noteData[], id: number): void => {
+        const newNotes = deleteItem(currentNotes, id);
+
+        setShowModal(false);
+        setNotes(newNotes);
+    }
+
+    const cancelDelete = (): void => {
+        setShowModal(false);
+        router.replace('/');
+    }
+
+    // TODO: place in own module / component file
     const DeleteModal = (): React.JSX.Element => {
-        // TODO: get data to delete certain note clicked on set id to a state object and use with deleItem call
         return (
             <>
                 <Modal
                     animationType='slide'
-                    transparent={true}
+                    transparent={false}
                     visible={showModal}
                     onRequestClose={() => setShowModal(false)}
                 >
                     <Text>
                         Are you sure you want to delete this note?
                     </Text>
-                    <Pressable onPress={(): void => console.log('delete note')}>
+                    <Pressable onPress={(): void => deleteNote(notes, id)}>
                         <Text>
                             Yes
                         </Text>
                     </Pressable>
-                    <Pressable onPress={() => router.replace('/')}>
+                    <Pressable onPress={(): void => cancelDelete()}>
                         <Text>
                             No
                         </Text>
@@ -92,3 +76,31 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        borderColor: '#000',
+        borderWidth: 1,
+        borderRadius: 5,
+        width: '50%',
+        marginTop: 10,
+        marginBottom: 10,
+        paddingBottom: 10,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+    },
+    deleteBtn: {
+        borderWidth: 1,
+        borderRadius: 3,
+        borderColor: '#000',
+        marginTop: 5,
+        marginRight: 5,
+        padding: 1,
+    },
+    btnContainer: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
+    }
+});
