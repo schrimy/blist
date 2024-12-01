@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Button, TextInput, View, Text } from 'react-native';
+import { Button, TextInput, View, Text, Pressable } from 'react-native';
 import { addData, updateData } from '../data/storage';
 import { noteData } from '../data/notesData';
 import RadioGroup from 'react-native-radio-buttons-group';
+import { ListContainer } from '../components/ListContainer';
 import { StateContext } from '../components/data/StateProvider';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 
@@ -86,6 +87,10 @@ function CreateNote(): React.JSX.Element {
                 onPress={setSelectedNoteStyle}
                 selectedId={selectedNoteStyle}
             />
+            {
+                selectedNoteStyle === '2'
+                && <ListContainer setContent={setContent} />
+            }
             <TextInput placeholder='Content' value={content} onChangeText={(text) => setContent(text)} multiline={true} />
             <Button title='Save' onPress={storeOrUpdateNote}/>
             <Button title='Cancel' onPress={() => router.replace('/')} />
