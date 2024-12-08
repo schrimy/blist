@@ -71,7 +71,17 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
                 {title}
             </Text>
             <Text>
-                {content}
+                {
+                    typeof content === 'string'
+                        ? content
+                        : content.map((item, i) => {
+                            return (
+                                <Text key={i}>
+                                    {item.content}<br />
+                                </Text>
+                            );
+                        })
+                }
             </Text>
         </View>
     );

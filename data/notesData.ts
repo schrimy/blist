@@ -1,3 +1,5 @@
+import { listItemData } from "@/components/ListContainer";
+
 export interface noteData {
     title: string,
 	id: number,
@@ -5,7 +7,7 @@ export interface noteData {
 	dateStart: Date,
 	dateEnd?: Date,
 	alarm?: Date,
-	content: string,
+	content: string | listItemData[],
 	list?: Boolean,
 	colour: string,
 }

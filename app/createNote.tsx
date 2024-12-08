@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Button, TextInput, View, Text, Pressable } from 'react-native';
+import { Button, TextInput, View, Text } from 'react-native';
 import { addData, updateData } from '../data/storage';
 import { noteData } from '../data/notesData';
 import RadioGroup from 'react-native-radio-buttons-group';
-import { ListContainer } from '../components/ListContainer';
+import { ListContainer, listItemData } from '../components/ListContainer';
 import { StateContext } from '../components/data/StateProvider';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 
@@ -23,7 +23,7 @@ function CreateNote(): React.JSX.Element {
     const [date, setDate] = React.useState(new Date());
     const [showPicker, setShowPicker] = React.useState(false);
     const [title, setTitle] = React.useState('');
-    const [content, setContent] = React.useState('');
+    const [content, setContent] = React.useState<string | listItemData[]>('');
     const [selectedNoteStyle, setSelectedNoteStyle] = React.useState('1');
 
     const router = useRouter();
@@ -33,7 +33,7 @@ function CreateNote(): React.JSX.Element {
     const { id } = useLocalSearchParams();
 
     // TODO: check to make sure the random id doens't already exist in the notes
-    // TODO: incorporate radio btn choice to save and start list obj implementation
+    // TODO: save and start list obj implementation
     const storeOrUpdateNote = (): void => {
         const note: noteData = {
             title: title,
@@ -41,7 +41,7 @@ function CreateNote(): React.JSX.Element {
             type: 'note',
             dateStart: date,
             content: content,
-            list: false,
+            list: typeof content === 'object',
             colour: '',
         };
 
@@ -88,11 +88,11 @@ function CreateNote(): React.JSX.Element {
                 selectedId={selectedNoteStyle}
             />
             {
-                selectedNoteStyle === '2'
-                && <ListContainer setContent={setContent} />
+                selectedNoteStyle === '1' && typeof content === 'string'
+                ? <TextInput placeholder='Content' value={content} onChangeText={(text) => setContent(text)} multiline={true} />
+                : <ListContainer setContent={setContent} />
             }
-            <TextInput placeholder='Content' value={content} onChangeText={(text) => setContent(text)} multiline={true} />
-            <Button title='Save' onPress={storeOrUpdateNote}/>
+            <Button title='Save' onPress={storeOrUpdateNote} />
             <Button title='Cancel' onPress={() => router.replace('/')} />
         </View>
     )

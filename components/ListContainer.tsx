@@ -2,24 +2,32 @@ import React from 'react';
 import { ListItem } from '../components/ListItem';
 import { Pressable, Text } from 'react-native';
 
-interface listItemData {
+export interface listItemData {
     content: string;
     complete: boolean;
 }
 
-export const ListContainer = (props: { setContent: (content: string) => void }): React.JSX.Element => {
+export const ListContainer = (props: { setContent: (content: listItemData[]) => void }): React.JSX.Element => {
     const [listItems, setListItems] = React.useState<listItemData[]>([{ content: '', complete: false }]);
 
     // TODO: implement list item change with the local state and use callback to set note content with list
-    const onListItemChange = (): void => {
-        console.log('list item change');
+    const onListItemChange = (id: number, itemState: listItemData): void => {
+        const newListItems = listItems.map((listItem, index) => {
+            if (index === id) {
+                return itemState;
+            } else {
+                return listItem;
+            }
+        });
+
+        setListItems(newListItems);
+        props.setContent(newListItems);
     }
 
     const addListItem = (): void => {
         setListItems([...listItems, { content: '', complete: false }]);
     }
 
-    // TODO pass in id, content and complete variables to list item
     return (
         <>
             {
