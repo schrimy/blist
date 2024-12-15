@@ -1,7 +1,8 @@
 import { noteData } from '../../data/notesData';
 import React, { useContext, useState } from 'react';
 import { useRouter } from 'expo-router';
-import { deleteItem } from '../../data/storage';
+import { CheckBox } from 'react-native-btr';
+import { deleteItem, updateData } from '../../data/storage';
 import { StateContext } from '../data/StateProvider';
 import { Text, StyleSheet, View, Pressable, Modal } from 'react-native';
 
@@ -12,8 +13,8 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
 
     const [showModal, setShowModal] = useState(false);
 
-    const deleteNote = (currentNotes: noteData[], id: number): void => {
-        const newNotes = deleteItem(currentNotes, id);
+    const deleteNote = (id: number): void => {
+        const newNotes = deleteItem(notes, id);
 
         setShowModal(false);
         setNotes(newNotes);
@@ -22,6 +23,20 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
     const cancelDelete = (): void => {
         setShowModal(false);
         router.replace('/');
+    }
+
+    const upateListItem = (listItemIndex: number): void => {
+        const currentNote = props.noteData;
+        
+        if (typeof currentNote.content === 'object') {
+            const lisItemComplete = currentNote.content[listItemIndex].complete;
+
+            currentNote.content[listItemIndex].complete = !lisItemComplete;
+        }
+
+        const newNotes = updateData(notes, currentNote);
+
+        setNotes(newNotes);
     }
 
     // TODO: place in own module / component file
@@ -37,7 +52,7 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
                     <Text>
                         Are you sure you want to delete this note?
                     </Text>
-                    <Pressable onPress={(): void => deleteNote(notes, id)}>
+                    <Pressable onPress={(): void => deleteNote(id)}>
                         <Text>
                             Yes
                         </Text>
@@ -70,19 +85,23 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
             <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
                 {title}
             </Text>
-            <Text>
+            <View style={styles.noteContent}>
                 {
                     typeof content === 'string'
-                        ? content
+                        ? <Text>{content}</Text>
                         : content.map((item, i) => {
                             return (
-                                <Text key={i}>
-                                    {item.content}<br />
-                                </Text>
+                                <View key={i} style={styles.listContent}>
+                                    <Text >
+                                        {item.content}
+                                    </Text>
+                                    <CheckBox checked={item.complete} onPress={() => upateListItem(i)} />
+                                    <br />
+                                </View>
                             );
                         })
                 }
-            </Text>
+            </View>
         </View>
     );
 }
@@ -112,5 +131,13 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'flex-end'
+    },
+    noteContent: {
+        marginTop: 10,
+    },
+    listContent: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     }
 });
