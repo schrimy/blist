@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TextInput } from'react-native';
 import { CheckBox } from 'react-native-btr';
 import { listItemData } from "@/components/ListContainer";
@@ -13,8 +13,13 @@ interface listItemProps {
 export function ListItem(props: listItemProps) {
     const {id, complete, content} = props;
 
-    const [itemComplete, setComplete] = React.useState(complete);
-    const [itemContent, setItemContent] = React.useState(content);
+    const [itemComplete, setComplete] = React.useState(false);
+    const [itemContent, setItemContent] = React.useState('');
+
+    useEffect(() => {
+        setComplete(complete);
+        setItemContent(content);
+    }, [complete, content]);
 
     const onCompleteChange = (): void => {
         props.onChange(id, { content: itemContent, complete: !itemComplete });

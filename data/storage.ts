@@ -30,7 +30,7 @@ const updateData = (noteState: noteData[], newNote: noteData): noteData[] => {
 
     setData(newNotes);
 
-    return newNotes
+    return newNotes;
 }
 
 const setData = async (notes: noteData[]) => {

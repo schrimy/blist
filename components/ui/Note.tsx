@@ -96,7 +96,6 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
                                         {item.content}
                                     </Text>
                                     <CheckBox checked={item.complete} onPress={() => upateListItem(i)} />
-                                    <br />
                                 </View>
                             );
                         })

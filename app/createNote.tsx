@@ -38,7 +38,7 @@ function CreateNote(): React.JSX.Element {
         const note: noteData = {
             title: title,
             id: id ? parseInt(String(id)) : Math.floor(Math.random() * 1000000),
-            type: 'note',
+            type: selectedNoteStyle,
             dateStart: date,
             content: content,
             list: typeof content === 'object',
@@ -62,6 +62,7 @@ function CreateNote(): React.JSX.Element {
                 setTitle(note.title);
                 setDate(note.dateStart);
                 setContent(note.content);
+                setSelectedNoteStyle(note.type);
             }
         }
     }, [id]);
@@ -90,7 +91,7 @@ function CreateNote(): React.JSX.Element {
             {
                 selectedNoteStyle === '1' && typeof content === 'string'
                 ? <TextInput placeholder='Content' value={content} onChangeText={(text) => setContent(text)} multiline={true} />
-                : <ListContainer setContent={setContent} />
+                : <ListContainer setContent={setContent} currentContent={content as listItemData[]} />
             }
             <Button title='Save' onPress={storeOrUpdateNote} />
             <Button title='Cancel' onPress={() => router.replace('/')} />

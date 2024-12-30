@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ListItem } from '../components/ListItem';
 import { Pressable, Text } from 'react-native';
 
@@ -7,10 +7,15 @@ export interface listItemData {
     complete: boolean;
 }
 
-export const ListContainer = (props: { setContent: (content: listItemData[]) => void }): React.JSX.Element => {
+export const ListContainer = (props: { setContent: (content: listItemData[]) => void, currentContent: listItemData[] }): React.JSX.Element => {
     const [listItems, setListItems] = React.useState<listItemData[]>([{ content: '', complete: false }]);
 
-    // TODO: implement list item change with the local state and use callback to set note content with list
+    useEffect(() => {
+        if (props.currentContent) {
+            setListItems(props.currentContent);
+        }
+    }, [props.currentContent]);
+
     const onListItemChange = (id: number, itemState: listItemData): void => {
         const newListItems = listItems.map((listItem, index) => {
             if (index === id) {
