@@ -67,6 +67,7 @@ function CreateNote(): React.JSX.Element {
         }
     }, [id]);
 
+    // TODO: When in edit mode remove radio btns, hwne creating clear the content when chganging the note type
     return (
         <View>
             <TextInput placeholder='Title' value={title} onChangeText={(text) => setTitle(text)} />
@@ -82,12 +83,12 @@ function CreateNote(): React.JSX.Element {
                         setShowPicker(false);
                     }}
                 />}
-            <RadioGroup 
-                layout='row'
-                radioButtons={radioData}
-                onPress={setSelectedNoteStyle}
-                selectedId={selectedNoteStyle}
-            />
+                <RadioGroup 
+                    layout='row'
+                    radioButtons={radioData}
+                    onPress={setSelectedNoteStyle}
+                    selectedId={selectedNoteStyle}
+                />
             {
                 selectedNoteStyle === '1' && typeof content === 'string'
                 ? <TextInput placeholder='Content' value={content} onChangeText={(text) => setContent(text)} multiline={true} />

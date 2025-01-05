@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import { ListItem } from '../components/ListItem';
-import { Pressable, Text } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
 export interface listItemData {
+    id: number;
     content: string;
     complete: boolean;
 }
 
 export const ListContainer = (props: { setContent: (content: listItemData[]) => void, currentContent: listItemData[] }): React.JSX.Element => {
-    const [listItems, setListItems] = React.useState<listItemData[]>([{ content: '', complete: false }]);
+    const [listItems, setListItems] = React.useState<listItemData[]>([{ id: 0, content: '', complete: false }]);
 
     useEffect(() => {
         if (props.currentContent) {
@@ -16,9 +17,9 @@ export const ListContainer = (props: { setContent: (content: listItemData[]) => 
         }
     }, [props.currentContent]);
 
-    const onListItemChange = (id: number, itemState: listItemData): void => {
-        const newListItems = listItems.map((listItem, index) => {
-            if (index === id) {
+    const onListItemChange = (itemState: listItemData): void => {
+        const newListItems = listItems.map((listItem) => {
+            if (listItem.id === itemState.id) {
                 return itemState;
             } else {
                 return listItem;
@@ -30,20 +31,32 @@ export const ListContainer = (props: { setContent: (content: listItemData[]) => 
     }
 
     const addListItem = (): void => {
-        setListItems([...listItems, { content: '', complete: false }]);
+        setListItems([...listItems, { id: Math.floor(Math.random() * 10000), content: '', complete: false }]);
     }
+
+    const removeListItem = (itemId: number): void => {
+        const newListItems = listItems.filter((listItem) => listItem.id !== itemId);
+
+        setListItems(newListItems);
+        props.setContent(newListItems);
+    };
 
     return (
         <>
             {
-                listItems.map((listItem, i) => {
+                listItems.map((listItem) => {
                     return (
-                        <ListItem
-                            key={i}
-                            id={i}
-                            content={listItem.content}
-                            complete={listItem.complete}
-                            onChange={onListItemChange} />
+                        <View key={listItem.id}>
+                            <ListItem
+                                key={listItem.id}
+                                id={listItem.id}
+                                content={listItem.content}
+                                complete={listItem.complete}
+                                onChange={onListItemChange} />
+                            <Pressable onPress={() => removeListItem(listItem.id)}>
+                                <Text>Delete</Text>
+                            </Pressable>
+                        </View>
                     );
                 })
             }

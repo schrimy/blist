@@ -7,7 +7,7 @@ interface listItemProps {
     id: number;
     content: string;
     complete: boolean;
-    onChange: (id:number, itemState: listItemData) => void;
+    onChange: (itemState: listItemData) => void;
 }
 
 export function ListItem(props: listItemProps) {
@@ -15,20 +15,22 @@ export function ListItem(props: listItemProps) {
 
     const [itemComplete, setComplete] = React.useState(false);
     const [itemContent, setItemContent] = React.useState('');
+    const [itemId, setItemId] = React.useState(0);
 
     useEffect(() => {
+        setItemId(id);
         setComplete(complete);
         setItemContent(content);
     }, [complete, content]);
 
     const onCompleteChange = (): void => {
-        props.onChange(id, { content: itemContent, complete: !itemComplete });
+        props.onChange({ id: itemId, content: itemContent, complete: !itemComplete });
 
         setComplete(!itemComplete);
     }
 
     const onContentChange = (text: string): void => {
-        props.onChange(id, { content: text, complete: itemComplete });
+        props.onChange({ id: itemId, content: text, complete: itemComplete });
 
         setItemContent(text);
     }
