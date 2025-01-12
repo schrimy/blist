@@ -29,15 +29,14 @@ function CreateNote(): React.JSX.Element {
     const router = useRouter();
 
     const [notes, SetNoteState] = useContext(StateContext);
-    
-    const { id } = useLocalSearchParams();
+                             
+    const { noteId } = useLocalSearchParams();
 
     // TODO: check to make sure the random id doens't already exist in the notes
-    // TODO: save and start list obj implementation
     const storeOrUpdateNote = (): void => {
         const note: noteData = {
             title: title,
-            id: id ? parseInt(String(id)) : Math.floor(Math.random() * 1000000),
+            id: noteId ? parseInt(String(noteId)) : Math.floor(Math.random() * 1000000),
             type: selectedNoteStyle,
             dateStart: date,
             content: content,
@@ -45,7 +44,7 @@ function CreateNote(): React.JSX.Element {
             colour: '',
         };
 
-        const newNotes = id 
+        const newNotes = noteId 
             ? updateData(notes, note)
             : addData(notes ,note);
 
@@ -54,9 +53,16 @@ function CreateNote(): React.JSX.Element {
         router.replace('/');
     }
 
+    const setNoteType = (noteType: string): void => {
+        if (noteType !== selectedNoteStyle) {
+            setSelectedNoteStyle(noteType);
+            setContent('');
+        }
+    }
+
     useEffect(() => {
-        if (id && typeof id === 'string') {
-            const note = notes.find((note) => note.id === parseInt(id));
+        if (noteId && typeof noteId === 'string') {
+            const note = notes.find((note) => note.id === parseInt(noteId));
 
             if (note) {
                 setTitle(note.title);
@@ -65,13 +71,12 @@ function CreateNote(): React.JSX.Element {
                 setSelectedNoteStyle(note.type);
             }
         }
-    }, [id]);
+    }, [noteId]);
 
-    // TODO: When in edit mode remove radio btns, hwne creating clear the content when chganging the note type
     return (
         <View>
             <TextInput placeholder='Title' value={title} onChangeText={(text) => setTitle(text)} />
-            <Text>{`Start date: ${new Date(date).toLocaleDateString()}`}</Text>
+            <Text>{`Start date: ${new Date(date).toLocaleDateString()}`}</Text>     
             <Button title='Pick a date' onPress={() => setShowPicker(true)} />
             {showPicker
                 && <DateTimePicker
@@ -83,12 +88,14 @@ function CreateNote(): React.JSX.Element {
                         setShowPicker(false);
                     }}
                 />}
-                <RadioGroup 
-                    layout='row'
-                    radioButtons={radioData}
-                    onPress={setSelectedNoteStyle}
-                    selectedId={selectedNoteStyle}
-                />
+                {!noteId &&
+                    <RadioGroup 
+                        layout='row'
+                        radioButtons={radioData}
+                        onPress={setNoteType}
+                        selectedId={selectedNoteStyle}
+                    />
+                }
             {
                 selectedNoteStyle === '1' && typeof content === 'string'
                 ? <TextInput placeholder='Content' value={content} onChangeText={(text) => setContent(text)} multiline={true} />

@@ -71,7 +71,7 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
         <View style={styles.container}>
             <DeleteModal />
             <View style={styles.btnContainer}>
-                <Pressable style={styles.deleteBtn} onPress={(): void => router.push({ pathname: '/createNote', params: { id: id } })}>
+                <Pressable style={styles.deleteBtn} onPress={(): void => router.push({ pathname: '/createNote', params: { noteId: id } })}>
                     <Text>
                         edit
                     </Text>
