@@ -1,4 +1,4 @@
-import {  StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     Pressable: {
@@ -16,5 +16,16 @@ export const styles = StyleSheet.create({
     Text: {
         color: '#fff',
         fontSize: 40,
-    }
+    },
+
+    InfoContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
+    },
+
+    InfoText: {
+        fontSize: 30,
+    },
 });

@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { CheckBox } from 'react-native-btr';
 import { deleteItem, updateData } from '../../data/storage';
 import { StateContext } from '../data/StateProvider';
-import { Text, StyleSheet, View, Pressable, Modal } from 'react-native';
+import { Text, StyleSheet, View, Pressable } from 'react-native';
 
 export default function Note(props: { noteData: noteData }): React.JSX.Element {
     const { title, content, id } = props.noteData;
@@ -22,7 +22,6 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
 
     const cancelDelete = (): void => {
         setShowModal(false);
-        router.replace('/');
     }
 
     const upateListItem = (listItemIndex: number): void => {
@@ -42,13 +41,8 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
     // TODO: place in own module / component file
     const DeleteModal = (): React.JSX.Element => {
         return (
-            <>
-                <Modal
-                    animationType='slide'
-                    transparent={false}
-                    visible={showModal}
-                    onRequestClose={() => setShowModal(false)}
-                >
+            <View style={styles.modal}>
+                <View style={styles.modalContent}>
                     <Text>
                         Are you sure you want to delete this note?
                     </Text>
@@ -62,46 +56,48 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
                             No
                         </Text>
                     </Pressable>
-                </Modal>
-            </>
+                </View>
+            </View>
         );
     }
 
     return (
-        <View style={styles.container}>
-            <DeleteModal />
-            <View style={styles.btnContainer}>
-                <Pressable style={styles.deleteBtn} onPress={(): void => router.push({ pathname: '/createNote', params: { noteId: id } })}>
-                    <Text>
-                        edit
-                    </Text>
-                </Pressable>
-                <Pressable style={styles.deleteBtn} onPress={() => setShowModal(true)}>
-                    <Text>
-                        x
-                    </Text>
-                </Pressable>
+        <>
+            { showModal && <DeleteModal /> }
+            <View style={styles.container}>
+                <View style={styles.btnContainer}>
+                    <Pressable style={styles.deleteBtn} onPress={(): void => router.push({ pathname: '/createNote', params: { noteId: id } })}>
+                        <Text>
+                            edit
+                        </Text>
+                    </Pressable>
+                    <Pressable style={styles.deleteBtn} onPress={() => setShowModal(true)}>
+                        <Text>
+                            x
+                        </Text>
+                    </Pressable>
+                </View>
+                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+                    {title}
+                </Text>
+                <View style={styles.noteContent}>
+                    {
+                        typeof content === 'string'
+                            ? <Text>{content}</Text>
+                            : content.map((item, i) => {
+                                return (
+                                    <View key={i} style={styles.listContent}>
+                                        <Text >
+                                            {item.content}
+                                        </Text>
+                                        <CheckBox checked={item.complete} onPress={() => upateListItem(i)} />
+                                    </View>
+                                );
+                            })
+                    }
+                </View>
             </View>
-            <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-                {title}
-            </Text>
-            <View style={styles.noteContent}>
-                {
-                    typeof content === 'string'
-                        ? <Text>{content}</Text>
-                        : content.map((item, i) => {
-                            return (
-                                <View key={i} style={styles.listContent}>
-                                    <Text >
-                                        {item.content}
-                                    </Text>
-                                    <CheckBox checked={item.complete} onPress={() => upateListItem(i)} />
-                                </View>
-                            );
-                        })
-                }
-            </View>
-        </View>
+        </>
     );
 }
 
@@ -118,6 +114,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
     },
+
     deleteBtn: {
         borderWidth: 1,
         borderRadius: 3,
@@ -126,17 +123,40 @@ const styles = StyleSheet.create({
         marginRight: 5,
         padding: 1,
     },
+
     btnContainer: {
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'flex-end'
     },
+
     noteContent: {
         marginTop: 10,
     },
+
     listContent: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-    }
+    },
+
+    modal: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%',
+        width: '100%',
+        zIndex: 1,
+        position: 'absolute',
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    },
+
+    modalContent: {
+            display: 'flex',
+            flexDirection: 'column',
+            backgroundColor: '#fff',
+            padding: 20,
+            borderRadius: 10,
+    },
 });
