@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Button, TextInput, View, Text } from 'react-native';
+import { TextInput, View, Text, TouchableOpacity } from 'react-native';
 import { addData, updateData } from '../data/storage';
 import { noteData } from '../data/notesData';
 import RadioGroup from 'react-native-radio-buttons-group';
+import { styles } from '../styles/main';
 import { ListContainer, listItemData } from '../components/ListContainer';
 import { StateContext } from '../components/data/StateProvider';
 import { useRouter, useLocalSearchParams } from 'expo-router';
@@ -74,10 +75,14 @@ function CreateNote(): React.JSX.Element {
     }, [noteId]);
 
     return (
-        <View>
-            <TextInput placeholder='Title' value={title} onChangeText={(text) => setTitle(text)} />
-            <Text>{`Start date: ${new Date(date).toLocaleDateString()}`}</Text>     
-            <Button title='Pick a date' onPress={() => setShowPicker(true)} />
+        <View style={styles.createNoteContainer}>
+            <TextInput style={styles.textInput} placeholder='Title' value={title} onChangeText={(text) => setTitle(text)} />
+            <View style={styles.dateContainer}>
+                <Text>{`Start date: ${new Date(date).toLocaleDateString()}`}</Text>     
+                <TouchableOpacity style={styles.button} onPress={() => setShowPicker(true)}>
+                    <Text style={styles.buttonText}>PICK A DATE</Text>
+                </TouchableOpacity>
+            </View>
             {showPicker
                 && <DateTimePicker
                     value={date}
@@ -89,7 +94,8 @@ function CreateNote(): React.JSX.Element {
                     }}
                 />}
                 {!noteId &&
-                    <RadioGroup 
+                    <RadioGroup
+                        containerStyle={styles.radioContainer} 
                         layout='row'
                         radioButtons={radioData}
                         onPress={setNoteType}
@@ -98,11 +104,17 @@ function CreateNote(): React.JSX.Element {
                 }
             {
                 selectedNoteStyle === '1' && typeof content === 'string'
-                ? <TextInput placeholder='Content' value={content} onChangeText={(text) => setContent(text)} multiline={true} />
+                ? <TextInput style={styles.textInput} placeholder='Content' value={content} onChangeText={(text) => setContent(text)} multiline={true} />
                 : <ListContainer setContent={setContent} currentContent={content as listItemData[]} />
             }
-            <Button title='Save' onPress={storeOrUpdateNote} />
-            <Button title='Cancel' onPress={() => router.replace('/')} />
+            <View style={styles.btnContainer}>
+                <TouchableOpacity style={styles.button} onPress={storeOrUpdateNote}>
+                    <Text style={styles.buttonText}>SAVE</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={() => router.replace('/')}>
+                    <Text style={styles.buttonText}>CANCEL</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 };

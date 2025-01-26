@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { TextInput } from'react-native';
 import { CheckBox } from 'react-native-btr';
 import { listItemData } from "@/components/ListContainer";
+import { styles } from '../styles/main';
 
 interface listItemProps {
     id: number;
@@ -37,7 +38,7 @@ export function ListItem(props: listItemProps) {
 
     return (
         <>
-            <TextInput placeholder='list item' value={itemContent} onChangeText={(text) => onContentChange(text)} />
+            <TextInput style={styles.textInput} placeholder='list item' value={itemContent} onChangeText={(text) => onContentChange(text)} />
             <CheckBox
                 checked={itemComplete}
                 onPress={() => onCompleteChange()}

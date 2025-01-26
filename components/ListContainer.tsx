@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ListItem } from '../components/ListItem';
-import { Pressable, Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { styles } from '../styles/main';
 
 export interface listItemData {
     id: number;
@@ -53,16 +54,16 @@ export const ListContainer = (props: { setContent: (content: listItemData[]) => 
                                 content={listItem.content}
                                 complete={listItem.complete}
                                 onChange={onListItemChange} />
-                            <Pressable onPress={() => removeListItem(listItem.id)}>
-                                <Text>Delete</Text>
-                            </Pressable>
+                            <TouchableOpacity style={styles.button} onPress={() => removeListItem(listItem.id)}>
+                                <Text style={styles.buttonText}>Delete</Text>
+                            </TouchableOpacity>
                         </View>
                     );
                 })
             }
-            <Pressable onPress={addListItem}>
-                <Text>+</Text>
-            </Pressable>
+            <TouchableOpacity style={styles.button} onPress={addListItem}>
+                <Text style={styles.buttonText}>+</Text>
+            </TouchableOpacity>
         </>
     );
 }
