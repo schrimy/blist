@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { TextInput } from'react-native';
+import { TextInput, View, StyleSheet } from'react-native';
 import { CheckBox } from 'react-native-btr';
 import { listItemData } from "@/components/ListContainer";
 import { styles } from '../styles/main';
@@ -37,12 +37,19 @@ export function ListItem(props: listItemProps) {
     }
 
     return (
-        <>
-            <TextInput style={styles.textInput} placeholder='list item' value={itemContent} onChangeText={(text) => onContentChange(text)} />
+        <View style={styles.listItemContainer}>
+            <TextInput style={inlinestyles.listItemTextInput} placeholder='list item' value={itemContent} onChangeText={(text) => onContentChange(text)} />
             <CheckBox
                 checked={itemComplete}
                 onPress={() => onCompleteChange()}
             />
-        </>
+        </View>
     );
 }
+
+const inlinestyles = StyleSheet.create({
+    listItemTextInput: {
+        ...styles.textInput,
+        marginRight: 5,
+    },
+});

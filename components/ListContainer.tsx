@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ListItem } from '../components/ListItem';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { styles } from '../styles/main';
 
 export interface listItemData {
@@ -54,7 +54,7 @@ export const ListContainer = (props: { setContent: (content: listItemData[]) => 
                                 content={listItem.content}
                                 complete={listItem.complete}
                                 onChange={onListItemChange} />
-                            <TouchableOpacity style={styles.button} onPress={() => removeListItem(listItem.id)}>
+                            <TouchableOpacity style={inlinestyles.deleteBtn} onPress={() => removeListItem(listItem.id)}>
                                 <Text style={styles.buttonText}>Delete</Text>
                             </TouchableOpacity>
                         </View>
@@ -67,3 +67,10 @@ export const ListContainer = (props: { setContent: (content: listItemData[]) => 
         </>
     );
 }
+
+const inlinestyles = StyleSheet.create({
+    deleteBtn: {
+        ...styles.button,
+        marginBottom: 15,
+    }
+});
