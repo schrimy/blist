@@ -101,11 +101,13 @@ export const notesStyles = StyleSheet.create({
 
     deleteBtn: {
         borderWidth: 1,
-        borderRadius: 3,
+        borderRadius: 7,
         borderColor: '#000',
+        backgroundColor: '#000',
         marginTop: 5,
         marginRight: 5,
-        padding: 1,
+        paddingHorizontal: 7,
+        paddingVertical: 5,
     },
 
     btnContainer: {

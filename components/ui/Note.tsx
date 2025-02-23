@@ -69,12 +69,12 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
             <View style={notesStyles.container}>
                 <View style={notesStyles.btnContainer}>
                     <Pressable style={notesStyles.deleteBtn} onPress={(): void => router.push({ pathname: '/createNote', params: { noteId: id } })}>
-                        <Text>
+                        <Text style={styles.buttonText}>
                             edit
                         </Text>
                     </Pressable>
                     <Pressable style={notesStyles.deleteBtn} onPress={() => setShowModal(true)}>
-                        <Text>
+                        <Text style={styles.buttonText}>
                             x
                         </Text>
                     </Pressable>
