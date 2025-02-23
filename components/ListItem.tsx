@@ -51,5 +51,6 @@ const inlinestyles = StyleSheet.create({
     listItemTextInput: {
         ...styles.textInput,
         marginRight: 5,
+        width: '92%',
     },
 });
