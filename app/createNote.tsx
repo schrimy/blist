@@ -51,7 +51,7 @@ function CreateNote(): React.JSX.Element {
 
         SetNoteState(newNotes);
 
-        router.replace('/');
+        router.back();
     }
 
     const setNoteType = (noteType: string): void => {
@@ -111,7 +111,7 @@ function CreateNote(): React.JSX.Element {
                 <TouchableOpacity style={styles.button} onPress={storeOrUpdateNote}>
                     <Text style={styles.buttonText}>SAVE</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => router.replace('/')}>
+                <TouchableOpacity style={styles.button} onPress={() => router.back()}>
                     <Text style={styles.buttonText}>CANCEL</Text>
                 </TouchableOpacity>
             </View>

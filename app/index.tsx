@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ScrollView } from 'react-native';
 import { AddButton } from '../components/AddButton';
-import { Stack } from 'expo-router/stack';
+import { Stack } from 'expo-router';
 import { titles } from '../constants/Strings';
 import { StateContext } from '../components/data/StateProvider';
 import Note from '../components/ui/Note';

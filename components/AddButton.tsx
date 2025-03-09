@@ -8,7 +8,7 @@ export function AddButton(): React.JSX.Element {
     const router = useRouter();
 
     return (
-        <Pressable style={styles.Pressable} onPress={() => router.push("/createNote")}>
+        <Pressable style={styles.Pressable} onPress={() => router.push('/createNote')}>
             <Text style={styles.Text}>+</Text>
         </Pressable>
     );
