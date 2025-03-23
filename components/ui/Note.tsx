@@ -2,6 +2,8 @@ import { noteData } from '../../data/notesData';
 import React, { useContext, useState } from 'react';
 import { useRouter } from 'expo-router';
 import { CheckBox } from 'react-native-btr';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { deleteItem, updateData } from '../../data/storage';
 import { StateContext } from '../data/StateProvider';
 import { Text, View, Pressable, TouchableOpacity, StyleSheet } from 'react-native';
@@ -69,14 +71,10 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
             <View style={notesStyles.container}>
                 <View style={notesStyles.btnContainer}>
                     <Pressable style={notesStyles.deleteBtn} onPress={(): void => router.push({ pathname: '/createNote', params: { noteId: id } })}>
-                        <Text style={styles.buttonText}>
-                            edit
-                        </Text>
+                        <AntDesign name='edit' size={16} color='white' />
                     </Pressable>
                     <Pressable style={notesStyles.deleteBtn} onPress={() => setShowModal(true)}>
-                        <Text style={styles.buttonText}>
-                            x
-                        </Text>
+                        <Ionicons name='trash-outline' size={16} color='white' />
                     </Pressable>
                 </View>
                 <Text style={{ fontWeight: 'bold', fontSize: 20 }}>

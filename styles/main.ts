@@ -2,15 +2,11 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     Pressable: {
-        backgroundColor: '#000',
-        width: 50,
-        height: 50,
-        borderRadius: 50,
         display: 'flex',
         alignItems: 'center',
         position: 'absolute',
-        right: 30,
-        bottom: 30,
+        right: 10,
+        bottom: 10,
     },
 
     Text: {
@@ -106,8 +102,10 @@ export const notesStyles = StyleSheet.create({
         backgroundColor: '#000',
         marginTop: 5,
         marginRight: 5,
-        paddingHorizontal: 7,
-        paddingVertical: 5,
+        paddingHorizontal: 5,
+        paddingVertical: 3,
+        display: 'flex',
+        justifyContent: 'center',
     },
 
     btnContainer: {
