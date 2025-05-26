@@ -20,7 +20,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.schrimy_t.blist"
     },
     "web": {
       "bundler": "metro",
@@ -33,6 +34,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "907eb459-9bda-4148-9106-3bd49e2c1d21"
+      }
+    },
+    "owner": "schrimy_t"
   }
 }
