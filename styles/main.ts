@@ -17,8 +17,11 @@ export const styles = StyleSheet.create({
     textInput: {
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
         width: '100%',
+        height: 35,
         borderRadius: 5,
         paddingLeft: 5,
+        paddingTop: 0,
+        paddingBottom: 0,
     },
 
     button: {
@@ -40,6 +43,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         marginTop: 30,
+        marginBottom: 30,
     },
 
     dateContainer: {
@@ -51,6 +55,7 @@ export const styles = StyleSheet.create({
     },
 
     createNoteContainer: {
+        flex: 1,
         width: '100%',
         marginTop: 20,
         paddingHorizontal: 20,

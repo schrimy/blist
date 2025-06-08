@@ -11,7 +11,7 @@ export default function Index() {
 
   return (
     <>
-      <ScrollView contentContainerStyle={{ flex: 1, alignItems: 'center' }}>
+      <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
         <Stack.Screen options={{ title: titles.app, headerTitleAlign: 'center' }} />
         {notes.length > 0 && notes.map((note, index) => {
           return (

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ListItem } from '../components/ListItem';
-import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, ScrollView } from 'react-native';
 import { styles } from '../styles/main';
 
 export interface listItemData {
@@ -43,7 +43,7 @@ export const ListContainer = (props: { setContent: (content: listItemData[]) => 
     };
 
     return (
-        <>
+        <ScrollView>
             {
                 listItems.map((listItem) => {
                     return (
@@ -64,7 +64,7 @@ export const ListContainer = (props: { setContent: (content: listItemData[]) => 
             <TouchableOpacity style={styles.button} onPress={addListItem}>
                 <Text style={styles.buttonText}>+</Text>
             </TouchableOpacity>
-        </>
+        </ScrollView>
     );
 }
 
