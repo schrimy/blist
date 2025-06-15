@@ -1,7 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { TextInput, View, Text, TouchableOpacity } from 'react-native';
+import { TextInput, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { addData, updateData } from '../data/storage';
+import { Stack } from 'expo-router';
+import { titles } from '../constants/Strings';
 import { noteData } from '../data/notesData';
 import RadioGroup from 'react-native-radio-buttons-group';
 import { styles } from '../styles/main';
@@ -76,6 +78,7 @@ function CreateNote(): React.JSX.Element {
 
     return (
         <View style={styles.createNoteContainer}>
+            <Stack.Screen options={{ title: titles.createNote }} />
             <TextInput style={styles.textInput} placeholder='Title' value={title} onChangeText={(text) => setTitle(text)} />
             <View style={styles.dateContainer}>
                 <Text>{`Start date: ${new Date(date).toLocaleDateString()}`}</Text>     
@@ -104,7 +107,9 @@ function CreateNote(): React.JSX.Element {
                 }
             {
                 selectedNoteStyle === '1' && typeof content === 'string'
-                ? <TextInput style={styles.textInput} placeholder='Content' value={content} onChangeText={(text) => setContent(text)} multiline={true} />
+                ? <ScrollView>
+                    <TextInput multiline style={styles.textInput} placeholder='Content' value={content} onChangeText={(text) => setContent(text)} />
+                </ScrollView>
                 : <ListContainer setContent={setContent} currentContent={content as listItemData[]} />
             }
             <View style={styles.btnContainer}>

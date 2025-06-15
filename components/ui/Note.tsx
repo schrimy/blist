@@ -87,10 +87,12 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
                             : content.map((item, i) => {
                                 return (
                                     <View key={i} style={notesStyles.listContent}>
-                                        <Text>
+                                        <Text style={notesStyles.listText}>
                                             {item.content}
                                         </Text>
-                                        <CheckBox checked={item.complete} onPress={() => upateListItem(i)} />
+                                        <View style={notesStyles.checkboxContainer}>
+                                            <CheckBox checked={item.complete} onPress={() => upateListItem(i)} />
+                                        </View>
                                     </View>
                                 );
                             })

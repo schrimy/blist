@@ -1,12 +1,12 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-    Pressable: {
+    newNote: {
         display: 'flex',
         alignItems: 'center',
         position: 'absolute',
-        right: 10,
-        bottom: 35,
+        right: 30,
+        bottom: 30,
     },
 
     Text: {
@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     textInput: {
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
         width: '100%',
-        height: 35,
+        minHeight: 35,
         borderRadius: 5,
         paddingLeft: 5,
         paddingTop: 0,
@@ -91,7 +91,7 @@ export const notesStyles = StyleSheet.create({
         borderColor: '#000',
         borderWidth: 1,
         borderRadius: 5,
-        width: '50%',
+        width: '80%',
         marginTop: 10,
         marginBottom: 10,
         paddingBottom: 10,
@@ -125,6 +125,7 @@ export const notesStyles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         overflow: 'hidden',
+        padding: 10,
     },
 
     noteText: {
@@ -136,8 +137,17 @@ export const notesStyles = StyleSheet.create({
     listContent: {
         width: '100%',
         flexDirection: 'row',
-        justifyContent: 'space-around',
         marginBottom: 5,
+        alignItems: 'center',
+    },
+    
+    listText: {
+        flex: 2,
+        textAlign: 'center',
+    },
+
+    checkboxContainer: {
+        height: 20,
     },
 
     modal: {
@@ -157,10 +167,10 @@ export const notesStyles = StyleSheet.create({
     },
 
     modalContent: {
-            display: 'flex',
-            flexDirection: 'column',
-            backgroundColor: '#fff',
-            padding: 20,
-            borderRadius: 10,
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: '#fff',
+        padding: 20,
+        borderRadius: 10,
     },
 });
