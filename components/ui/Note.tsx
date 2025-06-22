@@ -10,7 +10,7 @@ import { Text, View, Pressable, TouchableOpacity, StyleSheet } from 'react-nativ
 import { notesStyles, styles } from '../../styles/main';
 
 export default function Note(props: { noteData: noteData }): React.JSX.Element {
-    const { title, content, id } = props.noteData;
+    const { title, content, id, pinned } = props.noteData;
     const [notes, setNotes] = useContext(StateContext);
     const router = useRouter();
 
@@ -27,10 +27,10 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
         setShowModal(false);
     }
 
-    const upateListItem = (listItemIndex: number): void => {
+    const updateNote = (listItemIndex?: number): void => {
         const currentNote = props.noteData;
         
-        if (typeof currentNote.content === 'object') {
+        if (listItemIndex && typeof currentNote.content === 'object') {
             const lisItemComplete = currentNote.content[listItemIndex].complete;
 
             currentNote.content[listItemIndex].complete = !lisItemComplete;
@@ -39,6 +39,21 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
         const newNotes = updateData(notes, currentNote);
 
         setNotes(newNotes);
+    }
+
+    const onPinnedToggled = (): void => {
+        const currentNote = props.noteData;
+        currentNote.pinned = !currentNote.pinned;
+
+        const currentIndex = notes.findIndex(note => note.id === currentNote.id);
+
+        if (currentNote.pinned && currentIndex !== 0) {
+            // If the note is currently pinned and not at the top, move it to the top
+            notes.splice(currentIndex, 1);
+            notes.unshift(currentNote);
+        }
+
+        updateNote();
     }
 
     // TODO: place in own module / component file
@@ -65,11 +80,15 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
         );
     }
 
+    // TODO: update pinned icon so it's more obvious when it's pinned
     return (
         <>
             { showModal && <DeleteModal /> }
             <View style={notesStyles.container}>
                 <View style={notesStyles.btnContainer}>
+                    <Pressable style={notesStyles.deleteBtn} onPress={(): void => onPinnedToggled()}>
+                        <Ionicons name={pinned ? 'pin' : 'pin-outline'} size={16} color='white' />
+                    </Pressable>
                     <Pressable style={notesStyles.deleteBtn} onPress={(): void => router.push({ pathname: '/createNote', params: { noteId: id } })}>
                         <AntDesign name='edit' size={16} color='white' />
                     </Pressable>
@@ -91,7 +110,7 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
                                             {item.content}
                                         </Text>
                                         <View style={notesStyles.checkboxContainer}>
-                                            <CheckBox checked={item.complete} onPress={() => upateListItem(i)} />
+                                            <CheckBox checked={item.complete} onPress={() => updateNote(i)} />
                                         </View>
                                     </View>
                                 );

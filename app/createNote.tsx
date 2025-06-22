@@ -28,6 +28,7 @@ function CreateNote(): React.JSX.Element {
     const [title, setTitle] = React.useState('');
     const [content, setContent] = React.useState<string | listItemData[]>('');
     const [selectedNoteStyle, setSelectedNoteStyle] = React.useState('1');
+    const [pinned, setPinned] = React.useState(false);
 
     const router = useRouter();
 
@@ -36,6 +37,7 @@ function CreateNote(): React.JSX.Element {
     const { noteId } = useLocalSearchParams();
 
     // TODO: check to make sure the random id doens't already exist in the notes
+    // TODO: look at spreading the rest of the note so no need to reset the pinned state or pass edit mode to reduce what we reset?
     const storeOrUpdateNote = (): void => {
         const note: noteData = {
             title: title,
@@ -45,6 +47,7 @@ function CreateNote(): React.JSX.Element {
             content: content,
             list: typeof content === 'object',
             colour: '',
+            pinned: pinned,
         };
 
         const newNotes = noteId 
@@ -72,6 +75,7 @@ function CreateNote(): React.JSX.Element {
                 setDate(note.dateStart);
                 setContent(note.content);
                 setSelectedNoteStyle(note.type);
+                setPinned(note.pinned || false);
             }
         }
     }, [noteId]);

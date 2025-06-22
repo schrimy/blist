@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import { AddButton } from '../components/AddButton';
 import { Stack } from 'expo-router';

@@ -10,4 +10,5 @@ export interface noteData {
 	content: string | listItemData[],
 	list?: Boolean,
 	colour: string,
+	pinned?: boolean,
 }
