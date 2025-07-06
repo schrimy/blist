@@ -4,9 +4,10 @@ import { useRouter } from 'expo-router';
 import { CheckBox } from 'react-native-btr';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { DeleteModal } from './DeleteModal';
 import { deleteItem, updateData } from '../../data/storage';
 import { StateContext } from '../data/StateProvider';
-import { Text, View, Pressable, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, Pressable, TouchableOpacity } from 'react-native';
 import { notesStyles, styles } from '../../styles/main';
 
 export default function Note(props: { noteData: noteData }): React.JSX.Element {
@@ -56,38 +57,13 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
         updateNote();
     }
 
-    // TODO: place in own module / component file
-    const DeleteModal = (): React.JSX.Element => {
-        return (
-            <View style={notesStyles.modal}>
-                <View style={notesStyles.modalContent}>
-                    <Text style={notesStyles.modalText}>
-                        Are you sure you want to delete this note?
-                    </Text>
-                    <TouchableOpacity style={modalStyles.modalButton} onPress={(): void => deleteNote(id)}>
-                        <Text style={styles.buttonText}>
-                            Yes
-                        </Text>
-                    </TouchableOpacity>
-{/* Suggested code may be subject to a license. Learn more: ~LicenseLog:1093066757. */}
-                    <TouchableOpacity style={modalStyles.modalButton} onPress={(): void => cancelDelete()}>
-                        <Text style={styles.buttonText}>
-                            No
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        );
-    }
-
-    // TODO: update pinned icon so it's more obvious when it's pinned
     return (
         <>
-            { showModal && <DeleteModal /> }
+            { showModal && <DeleteModal deleteNote={deleteNote} cancelDelete={cancelDelete} id={id} /> }
             <View style={notesStyles.container}>
                 <View style={notesStyles.btnContainer}>
                     <Pressable style={notesStyles.deleteBtn} onPress={(): void => onPinnedToggled()}>
-                        <Ionicons name={pinned ? 'pin' : 'pin-outline'} size={16} color='white' />
+                        <AntDesign name={pinned ? 'pushpin' : 'pushpino'} size={16} color='white' />
                     </Pressable>
                     <Pressable style={notesStyles.deleteBtn} onPress={(): void => router.push({ pathname: '/createNote', params: { noteId: id } })}>
                         <AntDesign name='edit' size={16} color='white' />
@@ -121,10 +97,3 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
         </>
     );
 }
-
-const modalStyles = StyleSheet.create({
-    modalButton: {
-        ...styles.button,
-        marginBottom: 10,
-    }
-});
