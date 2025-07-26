@@ -4,7 +4,16 @@ import { StateProvider } from "../components/data/StateProvider";
 export default function Layout(): React.JSX.Element {
   return (
     <StateProvider>
-      <Stack />
+      <Stack screenOptions={
+        {
+          contentStyle: {
+            backgroundColor: '#33d2a4',
+          },
+          headerStyle: {
+            backgroundColor: '#fffefe',
+          },
+        }
+      } />
     </StateProvider>
   );
 }

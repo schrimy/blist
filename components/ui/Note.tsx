@@ -63,13 +63,13 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
             <View style={notesStyles.container}>
                 <View style={notesStyles.btnContainer}>
                     <Pressable style={notesStyles.deleteBtn} onPress={(): void => onPinnedToggled()}>
-                        <AntDesign name={pinned ? 'pushpin' : 'pushpino'} size={16} color='white' />
+                        <AntDesign name={pinned ? 'pushpin' : 'pushpino'} size={16} color='#bdc3c7' />
                     </Pressable>
                     <Pressable style={notesStyles.deleteBtn} onPress={(): void => router.push({ pathname: '/createNote', params: { noteId: id } })}>
-                        <AntDesign name='edit' size={16} color='white' />
+                        <AntDesign name='edit' size={16} color='#bdc3c7' />
                     </Pressable>
                     <Pressable style={notesStyles.deleteBtn} onPress={() => setShowModal(true)}>
-                        <Ionicons name='trash-outline' size={16} color='white' />
+                        <Ionicons name='trash-outline' size={16} color='#bdc3c7' />
                     </Pressable>
                 </View>
                 <Text style={{ fontWeight: 'bold', fontSize: 20 }}>

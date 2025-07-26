@@ -10,7 +10,7 @@ export function AddButton(): React.JSX.Element {
 
     return (
         <Pressable style={styles.newNote} onPress={() => router.push('/createNote')}>
-            <IonIcons name='add-circle' size={60} color='black' />
+            <IonIcons name='add' size={50} color='#2c3e50' />
         </Pressable>
     );
 }

@@ -1,12 +1,20 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
+    body: {
+        backgroundColor: '#000',
+    },
+
     newNote: {
         display: 'flex',
         alignItems: 'center',
         position: 'absolute',
         right: 30,
         bottom: 30,
+        backgroundColor: '#fff',
+        borderColor: '#2c3e50',
+        borderRadius: 100,
+        borderWidth: 5,
     },
 
     Text: {
@@ -88,7 +96,8 @@ export const styles = StyleSheet.create({
 
 export const notesStyles = StyleSheet.create({
     container: {
-        borderColor: '#000',
+        borderColor: '#2c3e50',
+        backgroundColor: '#fffefe',
         borderWidth: 1,
         borderRadius: 5,
         width: '80%',
