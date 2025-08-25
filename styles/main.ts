@@ -1,6 +1,23 @@
 import { StyleSheet } from 'react-native';
+import { ColorSchemeName } from 'react-native';
 
-export const styles = StyleSheet.create({
+function themeColours (theme: ColorSchemeName = 'light') {
+    return theme === 'dark' ? {
+        backgroundColor: '#000',
+        textColor: '#fff',
+        buttonBackground: '#000',
+        buttonText: '#000',
+        inputBackground: 'rgba(255, 255, 255, 0.2)',
+    } : {
+        backgroundColor: '#fff',
+        textColor: '#000',
+        buttonBackground: '#fff',
+        buttonText: '#fff',
+        inputBackground: 'rgba(0, 0, 0, 0.2)',
+    };
+}
+
+export const styles = (theme : ColorSchemeName = 'light') => StyleSheet.create({
     body: {
         backgroundColor: '#000',
     },
@@ -11,14 +28,14 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         right: 30,
         bottom: 30,
-        backgroundColor: '#fff',
+        backgroundColor: themeColours(theme).buttonBackground,
         borderColor: '#2c3e50',
         borderRadius: 100,
         borderWidth: 5,
     },
 
     Text: {
-        color: '#fff',
+        color: themeColours().textColor,
         fontSize: 40,
     },
 

@@ -6,16 +6,7 @@ export default function Layout(): React.JSX.Element {
   return (
     <StateProvider>
       <ThemeProvider>
-        <Stack screenOptions={
-          {
-            contentStyle: {
-              backgroundColor: '#33d2a4',
-            },
-            headerStyle: {
-              backgroundColor: '#fffefe',
-            },
-          }
-        } />
+        <Stack />
       </ThemeProvider>
     </StateProvider>
   );
