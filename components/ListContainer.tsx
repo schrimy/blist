@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { ListItem } from '../components/ListItem';
 import { Text, TouchableOpacity, View, StyleSheet, ScrollView } from 'react-native';
 import { styles } from '../styles/main';
+import { ThemeContext } from "../app/theme/ThemeProvider";
 
 export interface listItemData {
     id: number;
@@ -11,6 +12,7 @@ export interface listItemData {
 
 export const ListContainer = (props: { setContent: (content: listItemData[]) => void, currentContent: listItemData[] }): React.JSX.Element => {
     const [listItems, setListItems] = React.useState<listItemData[]>([{ id: 0, content: '', complete: false }]);
+    const [theme] = useContext(ThemeContext);
 
     useEffect(() => {
         if (props.currentContent) {
@@ -54,23 +56,16 @@ export const ListContainer = (props: { setContent: (content: listItemData[]) => 
                                 content={listItem.content}
                                 complete={listItem.complete}
                                 onChange={onListItemChange} />
-                            <TouchableOpacity style={inlinestyles.deleteBtn} onPress={() => removeListItem(listItem.id)}>
-                                <Text style={styles.buttonText}>Delete</Text>
+                            <TouchableOpacity style={[styles(theme).button, { marginBottom: 15 } ]} onPress={() => removeListItem(listItem.id)}>
+                                <Text style={styles(theme).buttonText}>Delete</Text>
                             </TouchableOpacity>
                         </View>
                     );
                 })
             }
-            <TouchableOpacity style={styles.button} onPress={addListItem}>
-                <Text style={styles.buttonText}>+</Text>
+            <TouchableOpacity style={styles(theme).button} onPress={addListItem}>
+                <Text style={styles(theme).buttonText}>+</Text>
             </TouchableOpacity>
         </ScrollView>
     );
 }
-
-const inlinestyles = StyleSheet.create({
-    deleteBtn: {
-        ...styles.button,
-        marginBottom: 15,
-    }
-});

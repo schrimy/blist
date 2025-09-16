@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { TextInput, View, StyleSheet } from'react-native';
 import { CheckBox } from 'react-native-btr';
 import { listItemData } from "@/components/ListContainer";
 import { styles } from '../styles/main';
+import { ThemeContext } from "../app/theme/ThemeProvider";
 
 interface listItemProps {
     id: number;
@@ -17,6 +18,8 @@ export function ListItem(props: listItemProps) {
     const [itemComplete, setComplete] = React.useState(false);
     const [itemContent, setItemContent] = React.useState('');
     const [itemId, setItemId] = React.useState(0);
+
+    const [theme] = useContext(ThemeContext);
 
     useEffect(() => {
         setItemId(id);
@@ -37,8 +40,8 @@ export function ListItem(props: listItemProps) {
     }
 
     return (
-        <View style={styles.listItemContainer}>
-            <TextInput style={inlinestyles.listItemTextInput} placeholder='list item' value={itemContent} onChangeText={(text) => onContentChange(text)} />
+        <View style={styles(theme).listItemContainer}>
+            <TextInput style={[styles(theme).textInput, { marginRight: 5, width: '92%' } ]} placeholder='list item' value={itemContent} onChangeText={(text) => onContentChange(text)} />
             <CheckBox
                 checked={itemComplete}
                 onPress={() => onCompleteChange()}
@@ -46,11 +49,3 @@ export function ListItem(props: listItemProps) {
         </View>
     );
 }
-
-const inlinestyles = StyleSheet.create({
-    listItemTextInput: {
-        ...styles.textInput,
-        marginRight: 5,
-        width: '92%',
-    },
-});

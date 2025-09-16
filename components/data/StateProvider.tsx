@@ -1,8 +1,9 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState, useContext } from 'react';
 import { Text, View, ActivityIndicator } from 'react-native';
 import { styles } from '../../styles/main';
 import { noteData } from '../../data/notesData';
 import { getData } from '../../data/storage';
+import { ThemeContext } from "../../app/theme/ThemeProvider";
 
 export const StateContext = createContext<[noteData[], (notes: noteData[]) => void]>([[], () => {}]);
 
@@ -10,6 +11,8 @@ export function StateProvider (props: React.PropsWithChildren): React.JSX.Elemen
     const [notes, setNotes] = useState<noteData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [loadingError, setLoadingError] = useState(false);
+
+    const [theme] = useContext(ThemeContext);
   
     useEffect(() => {
       const initData = getData();
@@ -25,7 +28,7 @@ export function StateProvider (props: React.PropsWithChildren): React.JSX.Elemen
 
     const buildLoader = (): React.JSX.Element => {
       return (
-        <View style={styles.InfoContainer}>
+        <View style={styles(theme).InfoContainer}>
           <ActivityIndicator size='large' color='#000' />
         </View>
       )
@@ -33,7 +36,7 @@ export function StateProvider (props: React.PropsWithChildren): React.JSX.Elemen
 
     const showError = (): React.JSX.Element => {
       return (
-        <View style={styles.InfoContainer}>
+        <View style={styles(theme).InfoContainer}>
           <Text>Oops, there has been an error. Please reload the app</Text>
         </View>
       )

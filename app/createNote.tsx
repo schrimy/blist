@@ -6,9 +6,10 @@ import { Stack } from 'expo-router';
 import { titles } from '../constants/Strings';
 import { noteData } from '../data/notesData';
 import RadioGroup from 'react-native-radio-buttons-group';
-import { styles } from '../styles/main';
+import { styles, themeColours } from '../styles/main';
 import { ListContainer, listItemData } from '../components/ListContainer';
 import { StateContext } from '../components/data/StateProvider';
+import { ThemeContext } from "../app/theme/ThemeProvider";
 import { useRouter, useLocalSearchParams } from 'expo-router';
 
 const radioData = [
@@ -33,6 +34,7 @@ function CreateNote(): React.JSX.Element {
     const router = useRouter();
 
     const [notes, SetNoteState] = useContext(StateContext);
+    const [theme] = useContext(ThemeContext);
                              
     const { noteId } = useLocalSearchParams();
 
@@ -81,13 +83,13 @@ function CreateNote(): React.JSX.Element {
     }, [noteId]);
 
     return (
-        <View style={styles.createNoteContainer}>
+        <View style={styles(theme).createNoteContainer}>
             <Stack.Screen options={{ title: titles.createNote }} />
-            <TextInput style={styles.textInput} placeholder='Title' value={title} onChangeText={(text) => setTitle(text)} />
-            <View style={styles.dateContainer}>
-                <Text>{`Start date: ${new Date(date).toLocaleDateString()}`}</Text>     
-                <TouchableOpacity style={styles.button} onPress={() => setShowPicker(true)}>
-                    <Text style={styles.buttonText}>PICK A DATE</Text>
+            <TextInput style={styles(theme).textInput} placeholder='Title' value={title} onChangeText={(text) => setTitle(text)} />
+            <View style={styles(theme).dateContainer}>
+                <Text style={styles(theme).dateText}>{`Start date: ${new Date(date).toLocaleDateString()}`}</Text>     
+                <TouchableOpacity style={styles(theme).button} onPress={() => setShowPicker(true)}>
+                    <Text style={styles(theme).buttonText}>PICK A DATE</Text>
                 </TouchableOpacity>
             </View>
             {showPicker
@@ -102,7 +104,8 @@ function CreateNote(): React.JSX.Element {
                 />}
                 {!noteId &&
                     <RadioGroup
-                        containerStyle={styles.radioContainer} 
+                        containerStyle={styles(theme).radioContainer} 
+                        labelStyle={{ color: themeColours(theme).textColor }}
                         layout='row'
                         radioButtons={radioData}
                         onPress={setNoteType}
@@ -112,16 +115,16 @@ function CreateNote(): React.JSX.Element {
             {
                 selectedNoteStyle === '1' && typeof content === 'string'
                 ? <ScrollView>
-                    <TextInput multiline style={styles.textInput} placeholder='Content' value={content} onChangeText={(text) => setContent(text)} />
+                    <TextInput multiline style={styles(theme).textInput} placeholder='Content' value={content} onChangeText={(text) => setContent(text)} />
                 </ScrollView>
                 : <ListContainer setContent={setContent} currentContent={content as listItemData[]} />
             }
-            <View style={styles.btnContainer}>
-                <TouchableOpacity style={styles.button} onPress={storeOrUpdateNote}>
-                    <Text style={styles.buttonText}>SAVE</Text>
+            <View style={styles(theme).btnContainer}>
+                <TouchableOpacity style={styles(theme).button} onPress={storeOrUpdateNote}>
+                    <Text style={styles(theme).buttonText}>SAVE</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => router.back()}>
-                    <Text style={styles.buttonText}>CANCEL</Text>
+                <TouchableOpacity style={styles(theme).button} onPress={() => router.back()}>
+                    <Text style={styles(theme).buttonText}>CANCEL</Text>
                 </TouchableOpacity>
             </View>
         </View>

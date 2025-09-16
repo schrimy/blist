@@ -1,25 +1,25 @@
 import { StyleSheet } from 'react-native';
 import { ColorSchemeName } from 'react-native';
 
-function themeColours (theme: ColorSchemeName = 'light') {
+export function themeColours (theme: ColorSchemeName = 'light') {
     return theme === 'dark' ? {
         backgroundColor: '#000',
         textColor: '#fff',
-        buttonBackground: '#000',
+        buttonBackground: '#fff',
         buttonText: '#000',
-        inputBackground: 'rgba(255, 255, 255, 0.2)',
+        inputBackground: '#fff',
     } : {
         backgroundColor: '#fff',
         textColor: '#000',
         buttonBackground: '#fff',
-        buttonText: '#fff',
+        buttonText: '#000',
         inputBackground: 'rgba(0, 0, 0, 0.2)',
     };
 }
 
 export const styles = (theme : ColorSchemeName = 'light') => StyleSheet.create({
     body: {
-        backgroundColor: '#000',
+        backgroundColor: themeColours(theme).backgroundColor,
     },
 
     newNote: {
@@ -29,18 +29,23 @@ export const styles = (theme : ColorSchemeName = 'light') => StyleSheet.create({
         right: 30,
         bottom: 30,
         backgroundColor: themeColours(theme).buttonBackground,
-        borderColor: '#2c3e50',
+        borderColor: themeColours(theme).buttonText,
         borderRadius: 100,
         borderWidth: 5,
     },
 
     Text: {
-        color: themeColours().textColor,
+        color: themeColours(theme).textColor,
         fontSize: 40,
     },
 
+    dateText: {
+        color: themeColours(theme).textColor,
+        fontSize: 20,
+    },
+
     textInput: {
-        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        backgroundColor: themeColours(theme).inputBackground,
         width: '100%',
         minHeight: 35,
         borderRadius: 5,
@@ -51,7 +56,7 @@ export const styles = (theme : ColorSchemeName = 'light') => StyleSheet.create({
 
     button: {
         borderRadius: 7,
-        backgroundColor: '#000',
+        backgroundColor: themeColours(theme).buttonBackground,
         width: 100,
         textAlign: 'center',
         alignItems: 'center',
@@ -59,7 +64,7 @@ export const styles = (theme : ColorSchemeName = 'light') => StyleSheet.create({
     },
 
     buttonText: {
-        color: 'white', 
+        color: themeColours(theme).buttonText, 
     },
 
     btnContainer: {
