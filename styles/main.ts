@@ -4,15 +4,17 @@ import { ColorSchemeName } from 'react-native';
 export function themeColours (theme: ColorSchemeName = 'light') {
     return theme === 'dark' ? {
         backgroundColor: '#000',
+        borderColour: '#fff',
         textColor: '#fff',
         buttonBackground: '#fff',
         buttonText: '#000',
         inputBackground: '#fff',
     } : {
         backgroundColor: '#fff',
+        borderColour: '#000',
         textColor: '#000',
-        buttonBackground: '#fff',
-        buttonText: '#000',
+        buttonBackground: '#000',
+        buttonText: '#fff',
         inputBackground: 'rgba(0, 0, 0, 0.2)',
     };
 }
@@ -116,10 +118,10 @@ export const styles = (theme : ColorSchemeName = 'light') => StyleSheet.create({
     },
 });
 
-export const notesStyles = StyleSheet.create({
+export const notesStyles = (theme : ColorSchemeName = 'light') => StyleSheet.create({
     container: {
-        borderColor: '#2c3e50',
-        backgroundColor: '#fffefe',
+        borderColor: themeColours(theme).borderColour,
+        backgroundColor: themeColours(theme).backgroundColor,
         borderWidth: 1,
         borderRadius: 5,
         width: '80%',
@@ -134,8 +136,8 @@ export const notesStyles = StyleSheet.create({
     deleteBtn: {
         borderWidth: 1,
         borderRadius: 7,
-        borderColor: '#000',
-        backgroundColor: '#000',
+        borderColor: themeColours(theme).borderColour,
+        backgroundColor: themeColours(theme).buttonBackground,
         marginTop: 5,
         marginRight: 5,
         paddingHorizontal: 5,
@@ -159,10 +161,17 @@ export const notesStyles = StyleSheet.create({
         padding: 10,
     },
 
+    noteTitle: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: themeColours(theme).textColor,
+    },
+
     noteText: {
         overflow: 'hidden',
         width: '90%',
         textAlign: 'center',
+        color: themeColours(theme).textColor,
     },
 
     listContent: {
@@ -194,14 +203,17 @@ export const notesStyles = StyleSheet.create({
     },
 
     modalText: {
+        color: themeColours(theme).textColor,
         marginBottom: 15,
     },
 
     modalContent: {
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#fff',
+        backgroundColor: themeColours(theme).backgroundColor,
         padding: 20,
+        borderColor: themeColours(theme).borderColour,
+        borderWidth: 1,
         borderRadius: 10,
     },
 });

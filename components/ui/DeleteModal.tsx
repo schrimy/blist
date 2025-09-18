@@ -13,9 +13,9 @@ export const DeleteModal = ({ deleteNote, cancelDelete, id }: DeleteModalProps):
     const [theme] = useContext(ThemeContext);
 
     return (
-        <View style={notesStyles.modal}>
-            <View style={notesStyles.modalContent}>
-                <Text style={notesStyles.modalText}>
+        <View style={notesStyles(theme).modal}>
+            <View style={notesStyles(theme).modalContent}>
+                <Text style={notesStyles(theme).modalText}>
                     Are you sure you want to delete this note?
                 </Text>
                 <TouchableOpacity style={[styles(theme).button, { marginBottom: 10 }]} onPress={(): void => deleteNote(id)}>

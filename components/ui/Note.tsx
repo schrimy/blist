@@ -7,12 +7,14 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { DeleteModal } from './DeleteModal';
 import { deleteItem, updateData } from '../../data/storage';
 import { StateContext } from '../data/StateProvider';
-import { Text, View, Pressable, TouchableOpacity } from 'react-native';
-import { notesStyles, styles } from '../../styles/main';
+import { ThemeContext } from "../../app/theme/ThemeProvider";
+import { Text, View, Pressable } from 'react-native';
+import { notesStyles, themeColours } from '../../styles/main';
 
 export default function Note(props: { noteData: noteData }): React.JSX.Element {
     const { title, content, id, pinned } = props.noteData;
     const [notes, setNotes] = useContext(StateContext);
+    const [theme] = useContext(ThemeContext);
     const router = useRouter();
 
     const [showModal, setShowModal] = useState(false);
@@ -60,32 +62,32 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
     return (
         <>
             { showModal && <DeleteModal deleteNote={deleteNote} cancelDelete={cancelDelete} id={id} /> }
-            <View style={notesStyles.container}>
-                <View style={notesStyles.btnContainer}>
-                    <Pressable style={notesStyles.deleteBtn} onPress={(): void => onPinnedToggled()}>
-                        <AntDesign name={pinned ? 'pushpin' : 'pushpino'} size={16} color='#bdc3c7' />
+            <View style={notesStyles(theme).container}>
+                <View style={notesStyles(theme).btnContainer}>
+                    <Pressable style={notesStyles(theme).deleteBtn} onPress={(): void => onPinnedToggled()}>
+                        <AntDesign name={pinned ? 'pushpin' : 'pushpino'} size={16} color={themeColours(theme).buttonText} />
                     </Pressable>
-                    <Pressable style={notesStyles.deleteBtn} onPress={(): void => router.push({ pathname: '/createNote', params: { noteId: id } })}>
-                        <AntDesign name='edit' size={16} color='#bdc3c7' />
+                    <Pressable style={notesStyles(theme).deleteBtn} onPress={(): void => router.push({ pathname: '/createNote', params: { noteId: id } })}>
+                        <AntDesign name='edit' size={16} color={themeColours(theme).buttonText} />
                     </Pressable>
-                    <Pressable style={notesStyles.deleteBtn} onPress={() => setShowModal(true)}>
-                        <Ionicons name='trash-outline' size={16} color='#bdc3c7' />
+                    <Pressable style={notesStyles(theme).deleteBtn} onPress={() => setShowModal(true)}>
+                        <Ionicons name='trash-outline' size={16} color={themeColours(theme).buttonText} />
                     </Pressable>
                 </View>
-                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+                <Text style={notesStyles(theme).noteTitle}>
                     {title}
                 </Text>
-                <View style={notesStyles.noteContent}>
+                <View style={notesStyles(theme).noteContent}>
                     {
                         typeof content === 'string'
-                            ? <Text style={notesStyles.noteText}>{content}</Text>
+                            ? <Text style={notesStyles(theme).noteText}>{content}</Text>
                             : content.map((item, i) => {
                                 return (
-                                    <View key={i} style={notesStyles.listContent}>
-                                        <Text style={notesStyles.listText}>
+                                    <View key={i} style={notesStyles(theme).listContent}>
+                                        <Text style={notesStyles(theme).listText}>
                                             {item.content}
                                         </Text>
-                                        <View style={notesStyles.checkboxContainer}>
+                                        <View style={notesStyles(theme).checkboxContainer}>
                                             <CheckBox checked={item.complete} onPress={() => updateNote(i)} />
                                         </View>
                                     </View>
