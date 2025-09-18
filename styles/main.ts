@@ -31,9 +31,7 @@ export const styles = (theme : ColorSchemeName = 'light') => StyleSheet.create({
         right: 30,
         bottom: 30,
         backgroundColor: themeColours(theme).buttonBackground,
-        borderColor: themeColours(theme).buttonText,
         borderRadius: 100,
-        borderWidth: 5,
     },
 
     Text: {

@@ -1,18 +1,21 @@
 import React, { createContext } from 'react';
 import { useColorScheme, ColorSchemeName } from 'react-native';
 
-export const ThemeContext = createContext<[theme: ColorSchemeName]>([
+export const ThemeContext = createContext<[theme: ColorSchemeName, toggleTheme: () => void]>([
   'light',
-//   toggleTheme: () => {}
+  () => {},
 ]);
 
 export function ThemeProvider({ children }: React.PropsWithChildren): React.JSX.Element {
-  const theme = useColorScheme();
+  const [themeState, setThemeState] = React.useState<ColorSchemeName>(useColorScheme());
 
-// TODO: set provider value based on native theme i.e. theme === 'dark' ? 'dark' : 'light' and set up module with dark and light colours
-// TODO: setup toggle function to switch themes
+  // TODO: cache theme preference with AsyncStorage
+  const toggleTheme = (): void => {
+    setThemeState((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  }
+
   return (
-    <ThemeContext.Provider value={[ theme ]}>
+    <ThemeContext.Provider value={[ themeState, toggleTheme ]}>
       {children}
     </ThemeContext.Provider>
   );

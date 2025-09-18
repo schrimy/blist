@@ -9,6 +9,7 @@ import Note from '../components/ui/Note';
 export default function Index() {
   const [notes, setNotes] = useContext(StateContext);
 
+  // TODO: add margin / padding so last note isn't covered by add button
   return (
     <>
       <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
