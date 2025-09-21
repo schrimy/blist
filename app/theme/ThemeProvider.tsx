@@ -1,5 +1,6 @@
 import React, { createContext } from 'react';
 import { useColorScheme, ColorSchemeName } from 'react-native';
+import { getTheme, setTheme } from '../../data/storage';
 
 export const ThemeContext = createContext<[theme: ColorSchemeName, toggleTheme: () => void]>([
   'light',
@@ -9,9 +10,21 @@ export const ThemeContext = createContext<[theme: ColorSchemeName, toggleTheme: 
 export function ThemeProvider({ children }: React.PropsWithChildren): React.JSX.Element {
   const [themeState, setThemeState] = React.useState<ColorSchemeName>(useColorScheme());
 
-  // TODO: cache theme preference with AsyncStorage
+  React.useEffect(() => {
+    const storedTheme = getTheme();
+
+    storedTheme.then((theme) => {
+      if (theme) {
+        setThemeState(theme);
+      }
+    });
+  }, []);
+
   const toggleTheme = (): void => {
-    setThemeState((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    const newTheme = themeState === 'light' ? 'dark' : 'light';
+
+    setThemeState(newTheme);
+    setTheme(newTheme);
   }
 
   return (

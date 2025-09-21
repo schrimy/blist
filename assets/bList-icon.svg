@@ -1,0 +1,30 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="240" fill="black"/>
+  
+  <!-- Typographic "b" -->
+  <path d="
+    M 140 120 
+    L 140 380 
+    Q 140 390, 150 390
+    L 160 390
+    Q 170 390, 170 380
+    L 170 280
+    Q 170 280, 180 290
+    Q 200 300, 220 300
+    Q 280 300, 280 240
+    Q 280 180, 220 180
+    Q 200 180, 180 190
+    Q 170 200, 170 200
+    L 170 130
+    Q 170 120, 160 120
+    L 150 120
+    Q 140 120, 140 120
+    Z" 
+    fill="white"/>
+  
+  <!-- List lines -->
+  <rect x="300" y="160" width="120" height="12" rx="6" fill="white"/>
+  <rect x="300" y="240" width="120" height="12" rx="6" fill="white"/>
+  <rect x="300" y="320" width="120" height="12" rx="6" fill="white"/>
+</svg>
