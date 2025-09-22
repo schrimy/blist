@@ -24,6 +24,11 @@ export const styles = (theme : ColorSchemeName = 'light') => StyleSheet.create({
         backgroundColor: themeColours(theme).backgroundColor,
     },
 
+    scrollContainer: {
+        alignItems: 'center',
+        paddingBottom: 80,
+    },
+
     newNote: {
         display: 'flex',
         alignItems: 'center',

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { ListItem } from '../components/ListItem';
-import { Text, TouchableOpacity, View, StyleSheet, ScrollView } from 'react-native';
+import { Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { styles } from '../styles/main';
 import { ThemeContext } from "../app/theme/ThemeProvider";
 
