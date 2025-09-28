@@ -10,6 +10,7 @@ export interface listItemData {
     complete: boolean;
 }
 
+// A container component to manage a list of list items
 export const ListContainer = (props: { setContent: (content: listItemData[]) => void, currentContent: listItemData[] }): React.JSX.Element => {
     const [listItems, setListItems] = React.useState<listItemData[]>([{ id: 0, content: '', complete: false }]);
     const [theme] = useContext(ThemeContext);

@@ -9,8 +9,7 @@ interface DeleteModalProps {
     cancelDelete: () => void;
 }
 
-// TODO: need the overlay to cover full view not just notes container
-
+// A modal component to confirm deletion of a note
 export const DeleteModal = ({ deleteNote, cancelDelete, id }: DeleteModalProps): React.JSX.Element => {
     const [theme] = useContext(ThemeContext);
 

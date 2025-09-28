@@ -42,6 +42,7 @@ export function StateProvider (props: React.PropsWithChildren): React.JSX.Elemen
       )
     }
   
+    // Provide the notes state and the function to update it to children components
     return (
       <StateContext.Provider value={[notes, setNotes]}>
         {isLoading

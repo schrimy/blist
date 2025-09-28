@@ -23,6 +23,7 @@ const radioData = [
     },
 ];
 
+// A screen component for creating or editing a note
 function CreateNote(): React.JSX.Element {
     const [date, setDate] = React.useState(new Date());
     const [showPicker, setShowPicker] = React.useState(false);
@@ -39,7 +40,6 @@ function CreateNote(): React.JSX.Element {
     const { noteId } = useLocalSearchParams();
 
     // TODO: check to make sure the random id doens't already exist in the notes
-    // TODO: look at spreading the rest of the note so no need to reset the pinned state or pass edit mode to reduce what we reset?
     const storeOrUpdateNote = (): void => {
         const note: noteData = {
             title: title,
@@ -61,6 +61,8 @@ function CreateNote(): React.JSX.Element {
         router.back();
     }
 
+    // sets the note type when changing between note and list
+    // also clears the content when changing type
     const setNoteType = (noteType: string): void => {
         if (noteType !== selectedNoteStyle) {
             setSelectedNoteStyle(noteType);

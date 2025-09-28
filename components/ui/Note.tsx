@@ -1,34 +1,20 @@
 import { noteData } from '../../data/notesData';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useRouter } from 'expo-router';
 import { CheckBox } from 'react-native-btr';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { DeleteModal } from './DeleteModal';
-import { deleteItem, updateData } from '../../data/storage';
+import { updateData } from '../../data/storage';
 import { StateContext } from '../data/StateProvider';
 import { ThemeContext } from "../../app/theme/ThemeProvider";
 import { Text, View, Pressable } from 'react-native';
 import { notesStyles, themeColours } from '../../styles/main';
 
-export default function Note(props: { noteData: noteData }): React.JSX.Element {
+export default function Note(props: { noteData: noteData, showModal: (id: number) => void }): React.JSX.Element {
     const { title, content, id, pinned } = props.noteData;
     const [notes, setNotes] = useContext(StateContext);
     const [theme] = useContext(ThemeContext);
     const router = useRouter();
-
-    const [showModal, setShowModal] = useState(false);
-
-    const deleteNote = (id: number): void => {
-        const newNotes = deleteItem(notes, id);
-
-        setShowModal(false);
-        setNotes(newNotes);
-    }
-
-    const cancelDelete = (): void => {
-        setShowModal(false);
-    }
 
     const updateNote = (listItemIndex?: number): void => {
         const currentNote = props.noteData;
@@ -61,7 +47,6 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
 
     return (
         <>
-            { showModal && <DeleteModal deleteNote={deleteNote} cancelDelete={cancelDelete} id={id} /> }
             <View style={notesStyles(theme).container}>
                 <View style={notesStyles(theme).btnContainer}>
                     <Pressable style={notesStyles(theme).deleteBtn} onPress={(): void => onPinnedToggled()}>
@@ -70,7 +55,7 @@ export default function Note(props: { noteData: noteData }): React.JSX.Element {
                     <Pressable style={notesStyles(theme).deleteBtn} onPress={(): void => router.push({ pathname: '/createNote', params: { noteId: id } })}>
                         <AntDesign name='edit' size={16} color={themeColours(theme).buttonText} />
                     </Pressable>
-                    <Pressable style={notesStyles(theme).deleteBtn} onPress={() => setShowModal(true)}>
+                    <Pressable style={notesStyles(theme).deleteBtn} onPress={() => props.showModal(id)}>
                         <Ionicons name='trash-outline' size={16} color={themeColours(theme).buttonText} />
                     </Pressable>
                 </View>
