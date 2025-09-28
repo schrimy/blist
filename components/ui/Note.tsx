@@ -17,17 +17,12 @@ export default function Note(props: { noteData: noteData, showModal: (id: number
     const router = useRouter();
 
     const updateNote = (listItemIndex?: number): void => {
-        console.log('update note id:', listItemIndex, ' note content:', content);
         const currentNote = props.noteData;
         
         if (listItemIndex && typeof currentNote.content === 'object') {
-            const listItemToUpdate = currentNote.content.find(item => item.id === listItemIndex);
-            
-            if (!listItemToUpdate) return;
+            const lisItemComplete = currentNote.content[listItemIndex].complete;
 
-            const lisItemComplete = listItemToUpdate.complete;
-
-            listItemToUpdate.complete = !lisItemComplete;
+            currentNote.content[listItemIndex].complete = !lisItemComplete;
         }
 
         const newNotes = updateData(notes, currentNote);
@@ -78,7 +73,7 @@ export default function Note(props: { noteData: noteData, showModal: (id: number
                                             {item.content}
                                         </Text>
                                         <View style={notesStyles(theme).checkboxContainer}>
-                                            <CheckBox color={themeColours(theme).borderColour} checked={item.complete} onPress={() => updateNote(item.id)} />
+                                            <CheckBox color={themeColours(theme).borderColour} checked={item.complete} onPress={() => updateNote(i)} />
                                         </View>
                                     </View>
                                 );
