@@ -1,5 +1,5 @@
 import { Stack } from "expo-router/stack";
-import { themeColours } from "../styles/main";
+import { styles, themeColours } from "../styles/main";
 import { StateProvider } from "../components/data/StateProvider";
 import { ThemeProvider, ThemeContext } from "./theme/ThemeProvider";
 import React, { useContext } from "react";
@@ -24,7 +24,7 @@ function RootLayout() {
       backgroundColor: themeColours(theme).backgroundColor
     },
     headerRight: () => (
-        <Pressable style={{ marginRight: 15 }} onPress={() => toggleTheme()}>
+        <Pressable style={styles(theme).themeButton} onPress={() => toggleTheme()}>
           {
             theme === 'dark'
               ? <Ionicons name='sunny-outline' size={20} color='#000' />

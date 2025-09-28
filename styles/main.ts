@@ -29,6 +29,11 @@ export const styles = (theme : ColorSchemeName = 'light') => StyleSheet.create({
         paddingBottom: 80,
     },
 
+    themeButton: {
+        marginRight: 15,
+        padding: 5,
+    },
+
     newNote: {
         display: 'flex',
         alignItems: 'center',
@@ -187,6 +192,7 @@ export const notesStyles = (theme : ColorSchemeName = 'light') => StyleSheet.cre
     listText: {
         flex: 2,
         textAlign: 'center',
+        color: themeColours(theme).textColor,
     },
 
     checkboxContainer: {

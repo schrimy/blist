@@ -73,7 +73,7 @@ export default function Note(props: { noteData: noteData, showModal: (id: number
                                             {item.content}
                                         </Text>
                                         <View style={notesStyles(theme).checkboxContainer}>
-                                            <CheckBox checked={item.complete} onPress={() => updateNote(i)} />
+                                            <CheckBox color={themeColours(theme).borderColour} checked={item.complete} onPress={() => updateNote(i)} />
                                         </View>
                                     </View>
                                 );
