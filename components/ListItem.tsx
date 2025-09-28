@@ -1,8 +1,8 @@
 import React, { useEffect, useContext } from 'react';
-import { TextInput, View, StyleSheet } from'react-native';
+import { TextInput, View } from'react-native';
 import { CheckBox } from 'react-native-btr';
 import { listItemData } from "@/components/ListContainer";
-import { styles } from '../styles/main';
+import { styles, themeColours } from '../styles/main';
 import { ThemeContext } from "../app/theme/ThemeProvider";
 
 interface listItemProps {
@@ -43,6 +43,7 @@ export function ListItem(props: listItemProps) {
         <View style={styles(theme).listItemContainer}>
             <TextInput style={[styles(theme).textInput, { marginRight: 5, width: '92%' } ]} placeholder='list item' value={itemContent} onChangeText={(text) => onContentChange(text)} />
             <CheckBox
+                color={themeColours(theme).borderColour}
                 checked={itemComplete}
                 onPress={() => onCompleteChange()}
             />

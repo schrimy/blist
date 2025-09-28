@@ -12,7 +12,7 @@ export interface listItemData {
 
 // A container component to manage a list of list items
 export const ListContainer = (props: { setContent: (content: listItemData[]) => void, currentContent: listItemData[] }): React.JSX.Element => {
-    const [listItems, setListItems] = React.useState<listItemData[]>([{ id: 0, content: '', complete: false }]);
+    const [listItems, setListItems] = React.useState<listItemData[]>([{ id: Math.floor(Math.random() * 999999) + 1, content: '', complete: false }]);
     const [theme] = useContext(ThemeContext);
 
     useEffect(() => {
@@ -35,7 +35,7 @@ export const ListContainer = (props: { setContent: (content: listItemData[]) => 
     }
 
     const addListItem = (): void => {
-        setListItems([...listItems, { id: Math.floor(Math.random() * 10000), content: '', complete: false }]);
+        setListItems([...listItems, { id: Math.floor(Math.random() * 999999) + 1, content: '', complete: false }]);
     }
 
     const removeListItem = (itemId: number): void => {

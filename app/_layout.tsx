@@ -24,12 +24,8 @@ function RootLayout() {
       backgroundColor: themeColours(theme).backgroundColor
     },
     headerRight: () => (
-        <Pressable style={styles(theme).themeButton} onPress={() => toggleTheme()}>
-          {
-            theme === 'dark'
-              ? <Ionicons name='sunny-outline' size={20} color='#000' />
-              : <Ionicons name='moon-outline' size={20} color='#000' />
-          }
+        <Pressable style={styles(theme).themeButton} onPressIn={() => toggleTheme()}>
+          <Ionicons name={theme === 'dark' ? 'sunny-outline' : 'moon-outline'} size={20} color='#000' />
         </Pressable>
       ),
   }}/>
