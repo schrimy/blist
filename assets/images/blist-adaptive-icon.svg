@@ -1,0 +1,27 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Typographic "b" -->
+  <path d="
+    M 280 240 
+    L 280 760 
+    Q 280 780, 300 780
+    L 320 780
+    Q 340 780, 340 760
+    L 340 560
+    Q 340 560, 360 580
+    Q 400 600, 440 600
+    Q 560 600, 560 480
+    Q 560 360, 440 360
+    Q 400 360, 360 380
+    Q 340 400, 340 400
+    L 340 260
+    Q 340 240, 320 240
+    L 300 240
+    Q 280 240, 280 240
+    Z" 
+    fill="white"/>
+  
+  <!-- List lines -->
+  <rect x="600" y="320" width="240" height="24" rx="12" fill="white"/>
+  <rect x="600" y="480" width="240" height="24" rx="12" fill="white"/>
+  <rect x="600" y="640" width="240" height="24" rx="12" fill="white"/>
+</svg>

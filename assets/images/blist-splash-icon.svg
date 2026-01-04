@@ -1,0 +1,36 @@
+<svg width="2048" height="2048" viewBox="0 0 2048 2048" xmlns="http://www.w3.org/2000/svg">
+  <!-- White background -->
+  <rect width="2048" height="2048" fill="white"/>
+  
+  <!-- Black circle background -->
+  <circle cx="1024" cy="800" r="600" fill="black"/>
+  
+  <!-- Typographic "b" -->
+  <path d="
+    M 560 480 
+    L 560 1520 
+    Q 560 1560, 600 1560
+    L 640 1560
+    Q 680 1560, 680 1520
+    L 680 1120
+    Q 680 1120, 720 1160
+    Q 800 1200, 880 1200
+    Q 1120 1200, 1120 960
+    Q 1120 720, 880 720
+    Q 800 720, 720 760
+    Q 680 800, 680 800
+    L 680 520
+    Q 680 480, 640 480
+    L 600 480
+    Q 560 480, 560 480
+    Z" 
+    fill="white"/>
+  
+  <!-- List lines -->
+  <rect x="1200" y="640" width="480" height="48" rx="24" fill="white"/>
+  <rect x="1200" y="960" width="480" height="48" rx="24" fill="white"/>
+  <rect x="1200" y="1280" width="480" height="48" rx="24" fill="white"/>
+  
+  <!-- "bList" text below -->
+  <text x="1024" y="1800" font-family="Arial, sans-serif" font-size="120" font-weight="bold" fill="black" text-anchor="middle">bList</text>
+</svg>

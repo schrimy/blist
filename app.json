@@ -4,12 +4,12 @@
     "slug": "blist",
     "version": "1.2.0",
     "orientation": "portrait",
-    "icon": "./assets/bList-icon.svg",
+    "icon": "./assets/images/blist-icon.png",
     "scheme": "myapp",
     "newArchEnabled": true,
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash-icon.png",
+      "image": "./assets/images/blist-splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,7 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/blist-adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.schrimy_t.blist"
