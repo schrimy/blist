@@ -16,13 +16,14 @@ export default function Note(props: { noteData: noteData, showModal: (id: number
     const [theme] = useContext(ThemeContext);
     const router = useRouter();
 
-    const updateNote = (listItemIndex?: number): void => {
+    /**
+     * Function to update complete status of list item or pinned status for note
+     */
+    const updateNote = (listItemIndex: number | null): void => {
         const currentNote = props.noteData;
         
-        if (listItemIndex && typeof currentNote.content === 'object') {
-            const lisItemComplete = currentNote.content[listItemIndex].complete;
-
-            currentNote.content[listItemIndex].complete = !lisItemComplete;
+        if (listItemIndex !== null && typeof currentNote.content === 'object') {
+            currentNote.content[listItemIndex].complete = !currentNote.content[listItemIndex].complete;
         }
 
         const newNotes = updateData(notes, currentNote);
@@ -42,7 +43,7 @@ export default function Note(props: { noteData: noteData, showModal: (id: number
             notes.unshift(currentNote);
         }
 
-        updateNote();
+        updateNote(null);
     }
 
     return (
